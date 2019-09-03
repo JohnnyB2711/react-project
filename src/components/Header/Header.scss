@@ -1,0 +1,14 @@
+.Header{
+  height: 200px;
+  background-image: url("background.png");
+  background-position: center;
+  display: flex;
+  justify-content: space-between;
+  .SearchButton{
+    background: pink;
+}
+  .Title{
+    color: white;
+    display: block;
+  }
+}
