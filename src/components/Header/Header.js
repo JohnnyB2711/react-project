@@ -5,7 +5,7 @@ import './Header.scss'
 
 function SearchLine() {
     return (
-        <InputGroup>
+        <InputGroup className='SearchInput'>
             <FormControl
                 placeholder='Enter movie...'
             />
@@ -15,16 +15,20 @@ function SearchLine() {
 
 function SearchButton() {
     return (
-        <Button className='SearchButton'>Search</Button>
+        <Button className='SearchButton'></Button>
     )
 }
 
 function Header() {
     return (
-        <header className='Header d-flex flex-row'>
-            <h1 className='Title'>Movie</h1>
-            <SearchLine/>
-            <SearchButton/>
+        <header className='container-fluid Header d-flex flex-row'>
+            <div className='HeaderContent'>
+                <h1 className='Title'>Movie</h1>
+                <div className='SearchBlock'>
+                    <SearchLine/>
+                    <SearchButton/>
+                </div>
+            </div>
         </header>
     );
 }

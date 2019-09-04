@@ -1,14 +1,32 @@
 .Header{
   height: 200px;
-  background-image: url("background.png");
+  background-image: url("img/background.png");
   background-position: center;
   display: flex;
   justify-content: space-between;
   .SearchButton{
-    background: pink;
+    height: 40px;
+    width: 40px;
+    background: url("./img/ButtonSearch.png") no-repeat;
+    background-size: contain;
+    border: none;
 }
   .Title{
     color: white;
     display: block;
+  }
+  .SearchInput{
+    width: 90%;
+  }
+  .HeaderContent{
+    display:flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 20px 10px 0 10px;
+  }
+  .SearchBlock{
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
   }
 }

@@ -1,11 +1,12 @@
 import React from 'react'
 import {Card} from 'react-bootstrap';
+import './MovieCard.scss'
 
 function MovieCard(props) {
     const {Movie} = props
     return (
-        <Card>
-            <Card.Img variant='top' src=''></Card.Img>
+        <Card className='Card'>
+            <Card.Img variant='top' src='./img/a.png'></Card.Img>
             <Card.Body>
 
                 <Card.Title> Название фильма</Card.Title>
@@ -15,12 +16,4 @@ function MovieCard(props) {
         </Card>
     )
 }
-
-function Content() {
-    return (
-        <MovieCard/>
-    )
-
-}
-
-export default Content;
+export default MovieCard;
