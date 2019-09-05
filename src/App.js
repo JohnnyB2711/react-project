@@ -11,21 +11,30 @@ import Viewed from "./layouts/Viewed/Viewed";
 import Planed from "./layouts/Planed/Planed";
 import Genre from "./layouts/Genre/Genre";
 import axios from "axios";
+import Dispatcher from './dispatcher'
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class App extends React.Component {
-    getGenre = async (e) => {
-        e.preventDefault();
+    async componentDidMount() {
+        this.getGenre()
+    }
+    getGenre = async () => {
         try {
-            const Api_Genre = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
-            const Genre_data = await Api_Genre.json();
-            console.log(Genre_data)
-        }
-        catch(e){
+            const {data} = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
+            console.log(data)
+            //this.$store.commit('ADD_ITEMS', response.data);
+
+            //передаем action в dispatcher
+            Dispatcher.dispatch({
+                action: getGenre,
+                item: data
+            });
+        } catch {
             console.log('error')
         }
     };
+
     render() {
         return (
             <div className='container col-12'>

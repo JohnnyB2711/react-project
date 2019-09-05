@@ -1,6 +1,8 @@
 import React from 'react'
 import {Card} from 'react-bootstrap';
 import './MovieCard.scss'
+import '../Buttons/Buttons'
+import Buttons from "../Buttons/Buttons";
 
 function MovieCard(props) {
     //const {Movie} = props
@@ -11,6 +13,7 @@ function MovieCard(props) {
 
                 <Card.Title> Название фильма</Card.Title>
                 <Card.Subtitle>Жанр</Card.Subtitle>
+                <Buttons/>
 
             </Card.Body>
         </Card>
