@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
-import {Button, Image, InputGroup, FormControl, Row, Col} from 'react-bootstrap';
+import {Button,InputGroup, FormControl} from 'react-bootstrap';
 import './Header.scss'
 
 function SearchLine() {

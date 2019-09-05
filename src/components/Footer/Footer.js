@@ -1,5 +1,4 @@
 import React from 'react'
-import {Card} from 'react-bootstrap';
 import '../Header/Header.scss'
 import './Footer.scss'
 function Footer() {

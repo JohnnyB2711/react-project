@@ -10,19 +10,37 @@ import Popular from "./layouts/Popular/Popular";
 import Viewed from "./layouts/Viewed/Viewed";
 import Planed from "./layouts/Planed/Planed";
 import Genre from "./layouts/Genre/Genre";
-function App() {
-    return(
-        <div className='container col-12'>
-            <Header/>
-            <Menu/>
+import axios from "axios";
+
+const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
+
+class App extends React.Component {
+    getGenre = async (e) => {
+        e.preventDefault();
+        try {
+            const Api_Genre = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
+            const Genre_data = await Api_Genre.json();
+            console.log(Genre_data)
+        }
+        catch(e){
+            console.log('error')
+        }
+    };
+    render() {
+        return (
+            <div className='container col-12'>
+                <Header/>
+                <Menu/>
                 <Route path='/toprated' component={Toprated}/>
                 <Route path='/upcoming' component={Upcoming}/>
                 <Route path='/popular' component={Popular}/>
                 <Route path='/viewed' component={Viewed}/>
                 <Route path='/planed' component={Planed}/>
                 <Route path='/genre' component={Genre}/>
-            <Footer/>
-        </div>
-    )
+                <Footer/>
+            </div>
+        )
+    }
 }
+
 export default App;

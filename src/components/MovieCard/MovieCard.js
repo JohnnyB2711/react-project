@@ -3,7 +3,7 @@ import {Card} from 'react-bootstrap';
 import './MovieCard.scss'
 
 function MovieCard(props) {
-    const {Movie} = props
+    //const {Movie} = props
     return (
         <Card className='Card'>
             <Card.Img variant='top' src='./img/a.png'></Card.Img>
