@@ -20,7 +20,7 @@ class App extends React.Component {
         this.getGenre();
         Dispatcher.dispatch({
             action: 'LOAD_GENRE',
-            genre: ???
+            genre: //как-то надо боратиться к  data
         });
     }
     getGenre = async () => {
