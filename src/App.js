@@ -16,30 +16,24 @@ import Dispatcher from './dispatcher'
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class App extends React.Component {
-    async componentDidMount() {
+    componentDidMount() {
         this.getGenre();
-        Dispatcher.dispatch({
-            action: 'LOAD_GENRE',
-            genre: //как-то надо обратиться к  data
-        });
     }
+
+
     getGenre = async () => {
         try {
             const {data} = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
-/*            Dispatcher.dispatch({
+            Dispatcher.dispatch({
                 action: 'LOAD_GENRE',
-                genre: data
-            });*/
-        } catch {
-            console.log('error')
+                genre: data.genres
+            });
+            //return data;
+        } catch (e) {
+            console.log(e)
         }
     };
-/*class App extends React.Component {
-    async componentDidMount() {
-        Dispatcher.dispatch({
-            action: 'LOAD_GENRE'
-        });
-    }*/
+
     render() {
         return (
             <div className='container col-12'>

@@ -11,18 +11,20 @@ function MenuItem(props) {
 }
 
 class Menu extends React.Component{
-    constructor(){
-        super();
-        this.state={
-            genre:[]
-        }
+    state={
+        genres:[]
     }
     componentDidMount() {
-        this.setState({
-            genre:Store.getGenre()
+        Store.addGenreListener((items)=>{
+            this.setState({
+                genres:Store.getGenre()
+            })
         })
-    }
 
+    }
+    componentWillUnmount(){
+        Store.removeGenreListener()
+    }
     render(){
         return (
             <Navbar collapseOnSelect expand="md">
@@ -34,8 +36,14 @@ class Menu extends React.Component{
                         <MenuItem text='Popular' href='/popular'/>
                         <MenuItem text='Viewed' href='/viewed'/>
                         <MenuItem text='Planned' href='/planed'/>
-                        <NavDropdown title="Genre" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/genre/{ID_GENRE}">{}</NavDropdown.Item>
+                        <NavDropdown title="Genre" id='/collasible-nav-dropdown'>
+                            {
+                                this.state.genres.map((item) => {
+                                    return <NavDropdown.Item key={item.id} href={`/genre/${item.id}`}>{item.name}</NavDropdown.Item>
+                                })
+                            }
+
+
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

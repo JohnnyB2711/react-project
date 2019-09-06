@@ -1,33 +1,29 @@
 import Dispatcher from './dispatcher'
-//let Dispatcher = require('./dispatcher');
-/*import React from 'react'
-class GenreStore extends React.Component{
-    constructor(){
-        super()
-        this.genres=[]
-    }
-    getAll(){
-        return this.genres
-    }
-}
-const genreStore = new GenreStore();
-export default genreStore*/
-let Store = {
-    items: [],
-    getGenre: function () {
-        return this.items;
+import { EventEmitter } from 'events'
+
+let Store =  Object.assign({}, EventEmitter.prototype, {
+    state:{
+        items: []
     },
-    addGenre: function (payload) {
-        this.items.push(payload.genre)
+    getGenre: function () {
+        return this.state.items;
+    },
+    setGenreList: function (data) {
+        this.state.items.push(...data);
+        this.emit('LOAD_GENRES')
+    },
+    addGenreListener (callback) {
+        this.addListener('LOAD_GENRES', callback)
+    },
+    removeGenreListener (callback) {
+        this.removeListener('LOAD_GENRES', callback)
     }
-}
+})
 Dispatcher.register(function (payload) {
     switch (payload.action) {
         case 'LOAD_GENRE':
-            Store.addGenre();
+            Store.setGenreList(payload.genre);
     }
-
-    return true; // Needed for Flux promise resolution
 });
 
 export default Store
