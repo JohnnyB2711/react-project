@@ -2,7 +2,7 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import {Navbar,Nav,NavDropdown} from 'react-bootstrap'
 import './Menu.scss'
-import genreStore from "./stores";
+import Store from "../../stores";
 
 function MenuItem(props) {
     return (
@@ -14,9 +14,15 @@ class Menu extends React.Component{
     constructor(){
         super();
         this.state={
-            genres:genreStore.getAll()
+            genre:[]
         }
     }
+    componentDidMount() {
+        this.setState({
+            genre:Store.getGenre()
+        })
+    }
+
     render(){
         return (
             <Navbar collapseOnSelect expand="md">
@@ -29,7 +35,7 @@ class Menu extends React.Component{
                         <MenuItem text='Viewed' href='/viewed'/>
                         <MenuItem text='Planned' href='/planed'/>
                         <NavDropdown title="Genre" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="/genre/{ID_GENRE}">{genre}</NavDropdown.Item>
+                            <NavDropdown.Item href="/genre/{ID_GENRE}">{}</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

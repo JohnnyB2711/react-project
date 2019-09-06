@@ -1,4 +1,5 @@
 import Dispatcher from './dispatcher'
+//let Dispatcher = require('./dispatcher');
 /*import React from 'react'
 class GenreStore extends React.Component{
     constructor(){
@@ -11,15 +12,22 @@ class GenreStore extends React.Component{
 }
 const genreStore = new GenreStore();
 export default genreStore*/
-let ListStore = {
-
+let Store = {
     items: [],
-    getAll: function () {
+    getGenre: function () {
         return this.items;
+    },
+    addGenre: function (payload) {
+        this.items.push(payload.genre)
     }
-
 }
 Dispatcher.register(function (payload) {
-    ListStore.items.push(payload.item);
+    switch (payload.action) {
+        case 'LOAD_GENRE':
+            Store.addGenre();
+    }
+
     return true; // Needed for Flux promise resolution
 });
+
+export default Store

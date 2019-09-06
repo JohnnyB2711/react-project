@@ -17,24 +17,29 @@ const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class App extends React.Component {
     async componentDidMount() {
-        this.getGenre()
+        this.getGenre();
+        Dispatcher.dispatch({
+            action: 'LOAD_GENRE',
+            genre: ???
+        });
     }
     getGenre = async () => {
         try {
             const {data} = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
-            console.log(data)
-            //this.$store.commit('ADD_ITEMS', response.data);
-
-            //передаем action в dispatcher
-            Dispatcher.dispatch({
-                action: getGenre,
-                item: data
-            });
+/*            Dispatcher.dispatch({
+                action: 'LOAD_GENRE',
+                genre: data
+            });*/
         } catch {
             console.log('error')
         }
     };
-
+/*class App extends React.Component {
+    async componentDidMount() {
+        Dispatcher.dispatch({
+            action: 'LOAD_GENRE'
+        });
+    }*/
     render() {
         return (
             <div className='container col-12'>
