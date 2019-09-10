@@ -1,29 +1,51 @@
 import React from 'react'
-import {Card, NavDropdown} from 'react-bootstrap';
+import {Card} from 'react-bootstrap';
 import './MovieCard.scss'
 import '../Buttons/Buttons'
 import Buttons from "../Buttons/Buttons";
-import Toprated from "../../layouts/Toprated/Toprated";
-import axios from "axios";
-import Store from "../../stores";
-
-const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
+import store from '../../stores'
 
 class MovieCard extends React.Component {
+
+    ShowGenre = (id_genre)=>{
+        store.state.items.find(el => el.id===id_genre)
+       /* store.state.items.find(function (element,id_genre) {
+            if (element.id===id_genre){
+                return true
+            }
+        });*/
+
+    };
     render() {
+        const films=this.props.films;
         return (
+            <div className='row'>
+                {
+                    films.map((film) => {
+                        return <div key={film.id} className='col-md-3'>
+                            <Card className='Card'>
+                                <Card.Img className='CardImg' variant='top' src={"https://image.tmdb.org/t/p/w185" + film.poster_path}></Card.Img>
+                                <Card.Body>
 
-            <Card className='Card' key={this.props.film}>
-                <Card.Img variant='top' src={this.props.poster}></Card.Img>
-                <Card.Body>
+                                    <Card.Title>{film.title}</Card.Title>
 
-                    <Card.Title>{this.props.title}</Card.Title>
-                    <Card.Subtitle>{this.props.genre_id}</Card.Subtitle>
-                    <Buttons/>
+                                    <Card.Subtitle>
+                                        {
+                                            film.genre_ids.map((id_genre)=>{
+                                                return ( <span key={id_genre}>{this.ShowGenre(id_genre)}</span>)
+                                            })
+                                        }
+                                    </Card.Subtitle>
 
-                </Card.Body>
-            </Card>
-            //<NavDropdown.Item key={item.id} href={`/genre/${item.id}`}>{item.name}</NavDropdown.Item>
+                                    <Buttons/>
+
+                                </Card.Body>
+                            </Card>
+                        </div>
+                    })
+                }
+            </div>
+
     )
 }
 
