@@ -25,5 +25,4 @@ Dispatcher.register(function (payload) {
             Store.setGenreList(payload.genre);
     }
 });
-//console.log(Store.state.items)
 export default Store

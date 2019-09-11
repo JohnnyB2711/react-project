@@ -7,7 +7,8 @@ import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
-class Popular extends React.Component {
+
+class SearchMovie extends React.Component {
     state = {
         films: [],
         currentPage: 1,
@@ -16,19 +17,19 @@ class Popular extends React.Component {
     };
 
     async componentDidMount() {
-        this.getFilms(this.state.currentPage)
+        this.getFilms(this.props.inputValue)
     }
 
-    getFilms = async (page_number) => {
+    getFilms = async (props) => {
         this.setState({
             loading:true
         });
         try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=${page_number}`);
+            const {data} = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&query=%27${props}%27`);
             await this.setState({
                 films: data.results,
                 total_pages: data.total_pages,
-                currentPage: page_number,
+                //currentPage: props,
                 loading: false
             })
         } catch {
@@ -38,14 +39,15 @@ class Popular extends React.Component {
 
     render() {
         const isLoggedIn = this.state.loading;
+        console.log(this.props.value)
         return (
             <div className='Page container-fluid'>
-                <div className='Pagination'>
-                    <Pagination onChange={this.getFilms} current={this.state.currentPage} className="ant-pagination"
+{/*                <div className='Pagination'>
+                    <Pagination onChange={this.getFilms(this.props)} current={this.state.currentPage} className="ant-pagination"
                                 defaultCurrent={this.state.currentPage} total={3200}/>
-                </div>
+                </div>*/}
                 <div className='PageFilm container-fluid'>
-                    <h1>Popular films</h1>
+                    <h1>SearchMovie films</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
@@ -59,4 +61,4 @@ class Popular extends React.Component {
 }
 
 
-export default Popular
+export default SearchMovie

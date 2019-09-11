@@ -25,6 +25,10 @@ class Menu extends React.Component{
     componentWillUnmount(){
         Store.removeGenreListener()
     }
+    CheckGenre = (item) => {
+
+    }
+
     render(){
         return (
             <Navbar collapseOnSelect expand="md">
@@ -39,11 +43,10 @@ class Menu extends React.Component{
                         <NavDropdown title="Genre" id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
+                                    this.Check(item)
                                     return <NavDropdown.Item key={item.id} href={`/genre/${item.id}`}>{item.name}</NavDropdown.Item>
                                 })
                             }
-
-
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>

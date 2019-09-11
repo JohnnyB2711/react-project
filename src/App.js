@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import Footer from './components/Footer/Footer'
+import SearchMovie from "./layouts/SearchMovie/SearchMovie";
 import 'bootstrap/dist/css/bootstrap.css'
 import {Route} from 'react-router-dom'
 import Toprated from "./layouts/Toprated/Toprated";
@@ -16,10 +17,13 @@ import Dispatcher from './dispatcher'
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class App extends React.Component {
+    state = {
+        inputValue: ''
+    }
+
     componentDidMount() {
         this.getGenre();
     }
-
 
     getGenre = async () => {
         try {
@@ -28,16 +32,22 @@ class App extends React.Component {
                 action: 'LOAD_GENRE',
                 genre: data.genres
             });
-            //return data;
         } catch (e) {
             console.log(e)
         }
     };
+    updateValue = (value) => {
+        this.setState({
+            inputValue: value
+        })
+    }
 
     render() {
         return (
             <div className='container col-12'>
-                <Header/>
+
+                <Header updateValue={this.updateValue}/>
+
                 <Menu/>
                 <Route path='/toprated' component={Toprated}/>
                 <Route path='/upcoming' component={Upcoming}/>
@@ -45,6 +55,9 @@ class App extends React.Component {
                 <Route path='/viewed' component={Viewed}/>
                 <Route path='/planed' component={Planed}/>
                 <Route path='/genre' component={Genre}/>
+
+                <Route path='/searchmovie' render={(props)=><SearchMovie value={this.state.inputValue} {...props}/>}/>
+
                 <Footer/>
             </div>
         )
