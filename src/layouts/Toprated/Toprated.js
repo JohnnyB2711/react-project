@@ -13,8 +13,7 @@ class Toprated extends React.Component {
         films: [],
         currentPage: 1,
         total_pages: 0,
-        loading: true,
-        genres:[]
+        loading: true
     };
 
     componentDidMount() {
@@ -52,7 +51,7 @@ class Toprated extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCard films={this.state.films} genres={this.state.genres}/>
+                        <MovieCard films={this.state.films}/>
                     )}
                 </div>
 
