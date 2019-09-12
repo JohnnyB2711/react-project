@@ -1,12 +1,13 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import {Navbar,Nav,NavDropdown} from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 import './Menu.scss'
 import Store from "../../stores";
 
 function MenuItem(props) {
     return (
-        <Nav.Link href={props.href}>{props.text}</Nav.Link>
+        <Link to={props.to}>{props.text}</Link>
     )
 }
 
@@ -26,7 +27,7 @@ class Menu extends React.Component{
         Store.removeGenreListener()
     }
     CheckGenre = (item) => {
-
+        alert(item)
     }
 
     render(){
@@ -35,15 +36,14 @@ class Menu extends React.Component{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='MenuItems'>
-                        <MenuItem text='Top rated' href='/toprated'/>
-                        <MenuItem text='Upcoming' href='/upcoming'/>
+                        <Link to='/'>Top rated</Link>
+                        <Link to='/upcoming'>Top rated</Link>
                         <MenuItem text='Popular' href='/popular'/>
                         <MenuItem text='Viewed' href='/viewed'/>
                         <MenuItem text='Planned' href='/planed'/>
                         <NavDropdown title="Genre" id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
-                                    this.Check(item)
                                     return <NavDropdown.Item key={item.id} href={`/genre/${item.id}`}>{item.name}</NavDropdown.Item>
                                 })
                             }
@@ -53,6 +53,5 @@ class Menu extends React.Component{
             </Navbar>
         )
     }
-
 }
 export default Menu

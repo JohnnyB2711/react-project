@@ -1,8 +1,8 @@
 import Dispatcher from './dispatcher'
-import { EventEmitter } from 'events'
+import {EventEmitter} from 'events'
 
-let Store =  Object.assign({}, EventEmitter.prototype, {
-    state:{
+let Store = Object.assign({}, EventEmitter.prototype, {
+    state: {
         items: []
     },
     getGenre: function () {
@@ -12,17 +12,14 @@ let Store =  Object.assign({}, EventEmitter.prototype, {
         this.state.items.push(...data);
         this.emit('LOAD_GENRES')
     },
-    addGenreListener (callback) {
+    addGenreListener(callback) {
         this.addListener('LOAD_GENRES', callback)
     },
-    removeGenreListener (callback) {
+    removeGenreListener(callback) {
         this.removeListener('LOAD_GENRES', callback)
     }
 })
 Dispatcher.register(function (payload) {
-    switch (payload.action) {
-        case 'LOAD_GENRE':
-            Store.setGenreList(payload.genre);
-    }
+    Store.setGenreList(payload.genre);
 });
 export default Store

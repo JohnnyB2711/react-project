@@ -2,7 +2,7 @@ import React from 'react';
 import MovieCard from "../../components/MovieCard/MovieCard";
 import '../Layouts.scss';
 import axios from "axios";
-import Pagination from 'rc-pagination';
+//import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
@@ -39,7 +39,7 @@ class SearchMovie extends React.Component {
 
     render() {
         const isLoggedIn = this.state.loading;
-        console.log(this.props.value)
+        //console.log(this.props);
         return (
             <div className='Page container-fluid'>
 {/*                <div className='Pagination'>

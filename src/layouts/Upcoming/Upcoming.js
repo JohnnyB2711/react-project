@@ -42,7 +42,7 @@ class Upcoming extends React.Component {
             <div className='Page container-fluid'>
                 <div className='Pagination'>
                     <Pagination onChange={this.getFilms} current={this.state.currentPage} className="ant-pagination"
-                                defaultCurrent={this.state.currentPage} total={3200}/>
+                                defaultCurrent={this.state.currentPage} total={this.state.total_pages*10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
                     <h1>Upcoming films</h1>
