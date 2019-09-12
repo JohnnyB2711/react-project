@@ -14,20 +14,11 @@ class Toprated extends React.Component {
         films: [],
         currentPage: 1,
         total_pages: 0,
-        loading: true,
-        genres:[]
+        loading: true
     };
 
     componentDidMount() {
         this.getFilms(this.state.currentPage)
-        Store.addGenreListener((items)=>{
-            this.setState({
-                genres:Store.getGenre()
-            })
-        })
-    }
-    componentWillUnmount(){
-        Store.removeGenreListener()
     }
 
     getFilms = async (page_number) => {
@@ -61,7 +52,7 @@ class Toprated extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCard films={this.state.films} genres={this.state.genres}/>
+                        <MovieCard films={this.state.films}/>
                     )}
                 </div>
 

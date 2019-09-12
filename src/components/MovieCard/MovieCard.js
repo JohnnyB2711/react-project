@@ -23,10 +23,9 @@ class MovieCard extends React.Component {
     ShowGenre = (id_genre, genres) => {
         const genre = this.state.genres.find((genre) => {
             return genre.id === id_genre
-        })
-        if (!genre) return ''
-        console.log(this.state.genres)
-        return genre.name
+        });
+        if (!genre) return '';
+        return genre.name+' / '
     };
     Function =
         (items) => {
