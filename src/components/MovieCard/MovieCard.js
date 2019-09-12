@@ -12,29 +12,26 @@ class MovieCard extends React.Component {
         genres: []
     }
 
-    componentDidMount() {
-        Store.addGenreListener(this.Function.bind(this))
+    componentDidMount () {
+        Store.addGenreListener(this.onGenresLoaded)
     }
 
-    componentWillUnmount() {
-        Store.removeGenreListener(this.Function.bind(this))
+    componentWillUnmount () {
+        Store.removeGenreListener(this.onGenresLoaded)
     }
 
-    ShowGenre = (id_genre, genres) => {
+    ShowGenre = (id_genre) => {
         const genre = this.state.genres.find((genre) => {
             return genre.id === id_genre
         })
         if (!genre) return ''
-        console.log(this.state.genres)
         return genre.name
-    };
-    Function =
-        (items) => {
-            this.setState({
-                genres: Store.getGenre()
-            })
-
-        }
+    }
+    onGenresLoaded = () => {
+        this.setState({
+            genres: Store.getGenre()
+        })
+    }
 
     render() {
         const films = this.props.films;

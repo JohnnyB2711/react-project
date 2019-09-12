@@ -5,7 +5,6 @@ import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
-import Store from "../../stores";
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
@@ -20,14 +19,6 @@ class Toprated extends React.Component {
 
     componentDidMount() {
         this.getFilms(this.state.currentPage)
-        Store.addGenreListener((items)=>{
-            this.setState({
-                genres:Store.getGenre()
-            })
-        })
-    }
-    componentWillUnmount(){
-        Store.removeGenreListener()
     }
 
     getFilms = async (page_number) => {

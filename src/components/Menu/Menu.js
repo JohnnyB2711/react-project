@@ -5,12 +5,6 @@ import {Link} from 'react-router-dom'
 import './Menu.scss'
 import Store from "../../stores";
 
-function MenuItem(props) {
-    return (
-        <Link to={props.to}>{props.text}</Link>
-    )
-}
-
 class Menu extends React.Component{
     state={
         genres:[]
@@ -37,10 +31,10 @@ class Menu extends React.Component{
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='MenuItems'>
                         <Link to='/'>Top rated</Link>
-                        <Link to='/upcoming'>Top rated</Link>
-                        <MenuItem text='Popular' href='/popular'/>
-                        <MenuItem text='Viewed' href='/viewed'/>
-                        <MenuItem text='Planned' href='/planed'/>
+                        <Link to='/upcoming'>Upcoming</Link>
+                        <Link to='/popular'>Popular</Link>
+                        <Link to='/viewed'>Viewed</Link>
+                        <Link to='/planed'>Planned</Link>
                         <NavDropdown title="Genre" id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
