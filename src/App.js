@@ -52,7 +52,7 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path='/' component={Toprated}/>
                     <Route path='/upcoming' component={Upcoming}/>
-                    <Route path='popular' component={Popular}/>
+                    <Route path='/popular' component={Popular}/>
                     <Route path='viewed' component={Viewed}/>
                     <Route path='planed' component={Planed}/>
                     <Route path='genre' component={Genre}/>

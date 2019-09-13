@@ -5,6 +5,7 @@ import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
+
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class Upcoming extends React.Component {
@@ -15,22 +16,23 @@ class Upcoming extends React.Component {
         loading: true
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         this.getFilms(this.state.currentPage)
     }
 
     getFilms = async (page_number) => {
         this.setState({
-            loading:true
+            loading: true
         });
         try {
             const {data} = await axios.get(`https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=${page_number}`);
             await this.setState({
-                films: data.results,
-                total_pages: data.total_pages,
-                currentPage: page_number,
-                loading: false
-            })
+                    films: data.results,
+                    total_pages: data.total_pages,
+                    currentPage: page_number,
+                    loading: false
+                }
+            )
         } catch {
             console.log('error')
         }
@@ -42,7 +44,7 @@ class Upcoming extends React.Component {
             <div className='Page container-fluid'>
                 <div className='Pagination'>
                     <Pagination onChange={this.getFilms} current={this.state.currentPage} className="ant-pagination"
-                                defaultCurrent={this.state.currentPage} total={this.state.total_pages*10}/>
+                                defaultCurrent={this.state.currentPage} total={this.state.total_pages * 10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
                     <h1>Upcoming films</h1>
