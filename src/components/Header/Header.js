@@ -5,18 +5,17 @@ import './Header.scss'
 class Header extends React.Component {
     state = {
         inputValue: ''
-    }
+    };
 
     updateInputValue = event => {
         this.setState({inputValue: event.target.value});
         this.props.updateValue(this.state.inputValue)
 
-    }
-
-    getInputValue() {
-
-    }
-
+    };
+    Search=(line)=>{
+        // eslint-disable-next-line no-restricted-globals
+        history.push('/search')
+    };
     render() {
         return (
             <header className='container-fluid Header d-flex flex-row'>
@@ -28,13 +27,12 @@ class Header extends React.Component {
                                 placeholder="Введите фильм для поиска"
                                 onChange={this.updateInputValue}/>
                         </InputGroup>
-                        <Button className='SearchButton' href='/searchmovie'
-                                onClick={() => this.getInputValue()}></Button>
+                        <Button className='SearchButton'
+                                onClick={() => this.Search(this.state.inputValue)}></Button>
                     </div>
                 </div>
             </header>
         );
-
     }
 }
 

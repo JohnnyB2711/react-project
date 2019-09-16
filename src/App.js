@@ -12,7 +12,7 @@ import Viewed from "./layouts/Viewed/Viewed";
 import Planed from "./layouts/Planed/Planed";
 import Genre from "./layouts/Genre/Genre";
 import axios from "axios";
-import Dispatcher from './dispatcher'
+import Dispatcher from './dispatcher';
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
@@ -52,12 +52,11 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path='/' component={Toprated}/>
                     <Route path='/upcoming' component={Upcoming}/>
-                    <Route path='popular' component={Popular}/>
+                    <Route path='/popular' component={Popular}/>
                     <Route path='viewed' component={Viewed}/>
                     <Route path='planed' component={Planed}/>
                     <Route path='genre' component={Genre}/>
-                    <Route path='/searchmovie'
-                           render={(props) => <SearchMovie value={this.state.inputValue} {...props}/>}/>
+                    <Route path='/search' component={SearchMovie}/>
                 </Switch>
                 <Footer/>
             </div>

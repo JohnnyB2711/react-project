@@ -21,25 +21,12 @@ class SearchMovie extends React.Component {
     }
 
     getFilms = async (props) => {
-        this.setState({
-            loading:true
-        });
-        try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&query=%27${props}%27`);
-            await this.setState({
-                films: data.results,
-                total_pages: data.total_pages,
-                //currentPage: props,
-                loading: false
-            })
-        } catch {
-            console.log('error')
-        }
+
     }
 
     render() {
+        const SearchLine = this.props.match.params.query;
         const isLoggedIn = this.state.loading;
-        //console.log(this.props);
         return (
             <div className='Page container-fluid'>
 {/*                <div className='Pagination'>
@@ -47,7 +34,7 @@ class SearchMovie extends React.Component {
                                 defaultCurrent={this.state.currentPage} total={3200}/>
                 </div>*/}
                 <div className='PageFilm container-fluid'>
-                    <h1>SearchMovie films</h1>
+                    <h1>SearchMovie films {SearchLine }</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
