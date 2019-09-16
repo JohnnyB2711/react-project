@@ -14,6 +14,10 @@ code {
 input{
   width: 100px;
 }
-.container{
+.spinner-border{
+  width: 8rem!important;
+  height: 8rem!important;
+  display: flex!important;
+  margin: 0 auto;
 
 }

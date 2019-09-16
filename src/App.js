@@ -4,7 +4,7 @@ import Menu from './components/Menu/Menu'
 import Footer from './components/Footer/Footer'
 import SearchMovie from "./layouts/SearchMovie/SearchMovie";
 import 'bootstrap/dist/css/bootstrap.css'
-import {Route, Router, Switch} from 'react-router-dom'
+import {Route,Switch} from 'react-router-dom'
 import Toprated from "./layouts/Toprated/Toprated";
 import Upcoming from "./layouts/Upcoming/Upcoming";
 import Popular from "./layouts/Popular/Popular";
@@ -55,8 +55,8 @@ class App extends React.Component {
                     <Route path='/popular' component={Popular}/>
                     <Route path='viewed' component={Viewed}/>
                     <Route path='planed' component={Planed}/>
-                    <Route path='genre' component={Genre}/>
-                    <Route path='/search' component={SearchMovie}/>
+                    <Route path='/genre/:Genre' component={Genre}/>
+                    <Route path='/search/:Line' component={SearchMovie}/>
                 </Switch>
                 <Footer/>
             </div>

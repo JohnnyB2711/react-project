@@ -2,6 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Button, InputGroup, FormControl} from 'react-bootstrap';
 import './Header.scss'
+import { withRouter } from 'react-router';
 class Header extends React.Component {
     state = {
         inputValue: ''
@@ -13,8 +14,10 @@ class Header extends React.Component {
 
     };
     Search=(line)=>{
-        // eslint-disable-next-line no-restricted-globals
-        history.push('/search')
+        this.props.history.push(`/search/${line}`);
+        this.setState({
+            inputValue:''
+        })
     };
     render() {
         return (
@@ -32,8 +35,7 @@ class Header extends React.Component {
                     </div>
                 </div>
             </header>
-        );
+        )
     }
 }
-
-export default Header;
+export default withRouter(Header);

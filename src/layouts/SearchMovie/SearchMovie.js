@@ -2,11 +2,11 @@ import React from 'react';
 import MovieCard from "../../components/MovieCard/MovieCard";
 import '../Layouts.scss';
 import axios from "axios";
-//import Pagination from 'rc-pagination';
+import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
-const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
+const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class SearchMovie extends React.Component {
     state = {
@@ -16,25 +16,39 @@ class SearchMovie extends React.Component {
         loading: true
     };
 
-    async componentDidMount() {
-        this.getFilms(this.props.inputValue)
+    componentDidMount() {
+        this.getFilms(this.state.currentPage,this.props.match.params.Line)
     }
 
-    getFilms = async (props) => {
-
-    }
+    getFilms = async (page_number,line) => {
+        this.setState({
+            loading: true
+        });
+        try {
+            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${line}`);
+            await this.setState({
+                    films: data.results,
+                    total_pages: data.total_pages,
+                    currentPage: page_number,
+                    loading: false
+                }
+            )
+        } catch(e) {
+            console.log(e)
+        }
+    };
 
     render() {
-        const SearchLine = this.props.match.params.query;
+        console.log(this.props.match.params.Line);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
-{/*                <div className='Pagination'>
-                    <Pagination onChange={this.getFilms(this.props)} current={this.state.currentPage} className="ant-pagination"
-                                defaultCurrent={this.state.currentPage} total={3200}/>
-                </div>*/}
+                <div className='Pagination'>
+                    <Pagination onChange={this.getFilms} current={this.state.currentPage} className="ant-pagination"
+                                defaultCurrent={this.state.currentPage} total={this.state.total_pages * 10}/>
+                </div>
                 <div className='PageFilm container-fluid'>
-                    <h1>SearchMovie films {SearchLine }</h1>
+                    <h1>SearchMovie films</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
@@ -49,3 +63,4 @@ class SearchMovie extends React.Component {
 
 
 export default SearchMovie
+
