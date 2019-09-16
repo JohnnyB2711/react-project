@@ -32,6 +32,7 @@ class MovieCard extends React.Component {
     };
 
     render() {
+        console.log(this.state.genres)
         const films = this.props.films;
         return (
             <div className='row'>
