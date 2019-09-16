@@ -41,7 +41,7 @@ class Menu extends React.Component{
                         <NavDropdown title={this.state.actionGenre} id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
-                                    return <NavDropdown.Item key={item.id} href={`/genre/${item.name}`}>{item.name}</NavDropdown.Item>
+                                    return <NavDropdown.Item key={item.id} href={`/genre/${item.id}`}>{item.name}</NavDropdown.Item>
                                 })
                             }
                         </NavDropdown>

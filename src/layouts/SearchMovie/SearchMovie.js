@@ -13,20 +13,23 @@ class SearchMovie extends React.Component {
         films: [],
         currentPage: 1,
         total_pages: 0,
-        loading: true,
-        line: ''
+        loading: true
     };
 
     componentDidMount() {
-        this.getLine()
+        this.getFilms(this.state.currentPage)
     }
-
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.Line !== prevProps.match.params.Line) {
+            this.getFilms(this.state.currentPage);
+        }
+    }
     getFilms = async (page_number) => {
         this.setState({
             loading: true
         });
         try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${this.state.line}`);
+            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${this.props.match.params.Line}`);
             await this.setState({
                     films: data.results,
                     total_pages: data.total_pages,
@@ -38,15 +41,7 @@ class SearchMovie extends React.Component {
             console.log(e)
         }
     };
-    getLine = async () => {
-        await this.setState({
-            line: this.props.match.params.Line
-        });
-        await this.getFilms(this.state.currentPage)
-    };
-
     render() {
-        console.log(this.props.match.params.Line);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>

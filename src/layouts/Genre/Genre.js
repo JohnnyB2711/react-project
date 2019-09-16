@@ -19,13 +19,17 @@ class Genre extends React.Component {
     componentDidMount() {
         this.getFilms(this.state.currentPage)
     }
-
-    getFilms = async (page_number,line) => {
+    componentDidUpdate(prevProps) {
+        if (this.props.match.params.Genre !== prevProps.match.params.Genre) {
+            this.getFilms(this.state.currentPage);
+        }
+    }
+    getFilms = async (page_number) => {
         this.setState({
             loading: true
         });
         try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${this.props.match.params.Genre}`);
+            const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&with_genres=${this.props.match.params.Genre}`);
             await this.setState({
                     films: data.results,
                     total_pages: data.total_pages,

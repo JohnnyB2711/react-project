@@ -13,8 +13,11 @@
   font-size: 14px;
 }
 .card-subtitle{
-  display: flex;
-  justify-content: space-around;
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+
 }
 .card-title{
   text-align: center;

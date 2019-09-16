@@ -24,7 +24,7 @@ class MovieCard extends React.Component {
             return genre.id === id_genre
         });
         if (!genre) return '';
-        return genre.name
+        return genre.name+' '
     };
     onGenresLoaded = () => {
         this.setState({
