@@ -4,9 +4,9 @@ import {Button} from 'react-bootstrap';
 
 function Buttons() {
     return(
-        <div>
-            <Button variant="primary">П</Button>
-            <Button variant="primary">З</Button>
+        <div className='buttons'>
+            <Button className='add' variant="primary"></Button>
+            <Button className='check' variant="primary"></Button>
         </div>
     )
 

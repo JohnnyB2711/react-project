@@ -13,19 +13,20 @@ class SearchMovie extends React.Component {
         films: [],
         currentPage: 1,
         total_pages: 0,
-        loading: true
+        loading: true,
+        line: ''
     };
 
     componentDidMount() {
-        this.getFilms(this.state.currentPage,this.props.match.params.Line)
+        this.getLine()
     }
 
-    getFilms = async (page_number,line) => {
+    getFilms = async (page_number) => {
         this.setState({
             loading: true
         });
         try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${line}`);
+            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${this.state.line}`);
             await this.setState({
                     films: data.results,
                     total_pages: data.total_pages,
@@ -33,9 +34,15 @@ class SearchMovie extends React.Component {
                     loading: false
                 }
             )
-        } catch(e) {
+        } catch (e) {
             console.log(e)
         }
+    };
+    getLine = async () => {
+        await this.setState({
+            line: this.props.match.params.Line
+        });
+        await this.getFilms(this.state.currentPage)
     };
 
     render() {

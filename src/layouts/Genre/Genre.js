@@ -16,16 +16,16 @@ class Genre extends React.Component {
         loading: true
     };
 
-    async componentDidMount() {
+    componentDidMount() {
         this.getFilms(this.state.currentPage)
     }
 
-    getFilms = async (page_number) => {
+    getFilms = async (page_number,line) => {
         this.setState({
-            loading:true
+            loading: true
         });
         try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${page_number}`);
+            const {data} = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&page=${page_number}&query=${this.props.match.params.Genre}`);
             await this.setState({
                     films: data.results,
                     total_pages: data.total_pages,
@@ -33,21 +33,22 @@ class Genre extends React.Component {
                     loading: false
                 }
             )
-        } catch {
-            console.log('error')
+        } catch(e) {
+            console.log(e)
         }
-    }
+    };
 
     render() {
+        console.log(this.props.match.params.Line);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
                 <div className='Pagination'>
                     <Pagination onChange={this.getFilms} current={this.state.currentPage} className="ant-pagination"
-                                defaultCurrent={this.state.currentPage} total={3200}/>
+                                defaultCurrent={this.state.currentPage} total={this.state.total_pages * 10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
-                    <h1>Genre</h1>
+                    <h1>Genre films</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
@@ -62,3 +63,4 @@ class Genre extends React.Component {
 
 
 export default Genre
+

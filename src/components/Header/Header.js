@@ -15,9 +15,6 @@ class Header extends React.Component {
     };
     Search=(line)=>{
         this.props.history.push(`/search/${line}`);
-        this.setState({
-            inputValue:''
-        })
     };
     render() {
         return (

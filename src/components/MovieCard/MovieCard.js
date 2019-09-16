@@ -50,7 +50,7 @@ class MovieCard extends React.Component {
                                         {
                                             film.genre_ids.map((id_genre) => {
                                                 return (
-                                                    <span key={id_genre}>{this.ShowGenre(id_genre)}</span>
+                                                    <span className='genre' key={id_genre}>{this.ShowGenre(id_genre)}</span>
                                                 )
                                             })
                                         }
