@@ -29,7 +29,6 @@ class Menu extends React.Component{
     };
 
     render(){
-        console.log(this.state.actionGenre)
         return (
             <Navbar collapseOnSelect expand="md">
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -40,7 +39,7 @@ class Menu extends React.Component{
                         <Link to='/popular'>Popular</Link>
                         <Link to='/viewed'>Viewed</Link>
                         <Link to='/planed'>Planned</Link>
-                        <NavDropdown eventKey={1} title={this.state.actionGenre} id='/collasible-nav-dropdown'>
+                        <NavDropdown title={this.state.actionGenre} id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
                                     return <NavDropdown.Item onClick={()=>{

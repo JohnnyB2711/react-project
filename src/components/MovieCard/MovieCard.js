@@ -7,9 +7,7 @@ import axios from 'axios'
 
 class MovieCard extends React.Component {
     state = {
-        genres: [],
-        viewedFlag:'false',
-        planedFlag:'false'
+        genres: []
     };
 
     componentDidMount () {
@@ -34,39 +32,20 @@ class MovieCard extends React.Component {
         })
     };
     postViewedFilm= async (film)=>{
-
         try {
-            var response = await axios.post("http://localhost/api/movie/viewed",
-                {
-                    "poster_path": "/e1mjopzAS2KNsvpbpahQ1a6SkSn.jpg",
-                    "adult": false,
-                    "overview": "From DC Comics comes the Suicide Squad, an antihero team of incarcerated supervillains who act as deniable assets for the United States government, undertaking high-risk black ops missions in exchange for commuted prison sentences.",
-                    "release_date": "2016-08-03",
-                    "genre_ids": [
-                        14,
-                        28,
-                        80
-                    ],
-                    "id": film.id,
-                    "original_title": "Suicide Squad",
-                    "original_language": "en",
-                    "title": "Suicide Squad",
-                    "backdrop_path": "/ndlQ2Cuc3cjTL7lTynw6I4boP4S.jpg",
-                    "popularity": 48.261451,
-                    "vote_count": 1466,
-                    "video": false,
-                    "vote_average": 5.91
-                }
-            );
-            this.setState({
-                viewedFlag:'true'
-            })
+            await axios.post("http://localhost/api/movie/viewed",film );
         } catch (e) {
            console.log(e)
         }
 
-    }
-
+    };
+    postPlannedFilm= async (film)=>{
+        try {
+            await axios.post("http://localhost/api/movie/planned",film );
+        } catch (e) {
+            console.log(e)
+        }
+    };
     render() {
         const films = this.props.films;
         return (
@@ -93,7 +72,7 @@ class MovieCard extends React.Component {
 
                                     <div className='buttons'>
                                         <Button className='add' variant="primary" onClick={() => this.postViewedFilm(film)}></Button>
-                                        <Button className='check' variant="primary"></Button>
+                                        <Button className='check' variant="primary" onClick={()=>this.postPlannedFilm(film)}></Button>
                                     </div>
 
                                 </Card.Body>

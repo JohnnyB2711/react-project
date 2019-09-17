@@ -4,7 +4,7 @@ import Menu from './components/Menu/Menu'
 import Footer from './components/Footer/Footer'
 import SearchMovie from "./layouts/SearchMovie/SearchMovie";
 import 'bootstrap/dist/css/bootstrap.css'
-import {Route,Switch} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import Toprated from "./layouts/Toprated/Toprated";
 import Upcoming from "./layouts/Upcoming/Upcoming";
 import Popular from "./layouts/Popular/Popular";
@@ -23,6 +23,20 @@ class App extends React.Component {
 
     componentDidMount() {
         this.getGenre();
+        this.getPlanedAndViewedFilms()
+    }
+
+    getPlanedAndViewedFilms = async () => {
+        try {
+            const {data} = await axios.get ("http://localhost/api/movie/viewedandplanned");
+            console.log(data)
+            Dispatcher.dispatch({
+                action: 'LOAD_PLANED_AND_VIEWED_FILMS',
+                films: data
+            });
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     getGenre = async () => {
@@ -53,8 +67,8 @@ class App extends React.Component {
                     <Route exact path='/' component={Toprated}/>
                     <Route path='/upcoming' component={Upcoming}/>
                     <Route path='/popular' component={Popular}/>
-                    <Route path='viewed' component={Viewed}/>
-                    <Route path='planed' component={Planed}/>
+                    <Route path='/viewed' component={Viewed}/>
+                    <Route path='/planed' component={Planed}/>
                     <Route path='/genre/:Genre' component={Genre}/>
                     <Route path='/search/:Line' component={SearchMovie}/>
                 </Switch>
