@@ -43,7 +43,6 @@ class Genre extends React.Component {
     };
 
     render() {
-        console.log(this.props.match.params.Line);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>

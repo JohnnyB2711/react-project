@@ -4,6 +4,7 @@ import {Navbar,Nav,NavDropdown} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import './Menu.scss'
 import Store from "../../stores";
+import { withRouter } from 'react-router';
 
 class Menu extends React.Component{
     state={
@@ -28,6 +29,7 @@ class Menu extends React.Component{
     };
 
     render(){
+        console.log(this.state.actionGenre)
         return (
             <Navbar collapseOnSelect expand="md">
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -38,10 +40,13 @@ class Menu extends React.Component{
                         <Link to='/popular'>Popular</Link>
                         <Link to='/viewed'>Viewed</Link>
                         <Link to='/planed'>Planned</Link>
-                        <NavDropdown title={this.state.actionGenre} id='/collasible-nav-dropdown'>
+                        <NavDropdown eventKey={1} title={this.state.actionGenre} id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
-                                    return <NavDropdown.Item key={item.id} href={`/genre/${item.id}`}>{item.name}</NavDropdown.Item>
+                                    return <NavDropdown.Item onClick={(e)=>{
+                                        e.preventDefault();
+                                        this.props.history.push(`/genre/${item.id}`);
+                                    }}key={item.id}>{item.name}</NavDropdown.Item>
                                 })
                             }
                         </NavDropdown>
@@ -51,4 +56,4 @@ class Menu extends React.Component{
         )
     }
 }
-export default Menu
+export default withRouter (Menu)
