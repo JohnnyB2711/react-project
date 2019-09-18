@@ -17,9 +17,8 @@ class Toprated extends React.Component {
     };
 
     componentDidMount() {
-        this.getFilms(this.state.currentPage)
+        this.getFilms(this.state.currentPage);
     }
-
     getFilms = async (page_number) => {
         this.setState({
             loading: true
@@ -39,6 +38,7 @@ class Toprated extends React.Component {
     }
 
     render() {
+        console.log(this.state.films)
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>

@@ -19,7 +19,7 @@ const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 class App extends React.Component {
     state = {
         inputValue: ''
-    }
+    };
 
     componentDidMount() {
         this.getGenre();
@@ -29,15 +29,14 @@ class App extends React.Component {
     getPlanedAndViewedFilms = async () => {
         try {
             const {data} = await axios.get ("http://localhost/api/movie/viewedandplanned");
-            console.log(data)
             Dispatcher.dispatch({
-                action: 'LOAD_PLANED_AND_VIEWED_FILMS',
+                action: 'LOAD_FILMS',
                 films: data
             });
         } catch (e) {
             console.log(e)
         }
-    }
+    };
 
     getGenre = async () => {
         try {
@@ -54,11 +53,11 @@ class App extends React.Component {
         this.setState({
             inputValue: value
         })
-    }
+    };
 
     render() {
         return (
-            <div className='container col-12'>
+            <div className='container col-10'>
 
                 <Header updateValue={this.updateValue}/>
 

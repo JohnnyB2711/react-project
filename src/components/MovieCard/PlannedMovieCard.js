@@ -5,24 +5,20 @@ import '../Buttons/Buttons'
 import Store from "../../stores";
 import axios from 'axios'
 
-class MovieCard extends React.Component {
+class PlannedMovieCard extends React.Component {
     state = {
         genres: [],
-        pvFilms: [],
-        plannedFilm:'false',
-        vievedFilm:'false'
+        films:[],
+        currentPage: 1,
     };
 
     componentDidMount() {
         this.onGenresLoaded();
-        this.onPVFilmLoaded();
-        Store.addGenreListener(this.onGenresLoaded);
-        Store.addFilmsListener(this.onPVFilmLoaded)
+        Store.addGenreListener(this.onGenresLoaded)
     }
 
     componentWillUnmount() {
-        Store.removeGenreListener(this.onGenresLoaded);
-        Store.removeFilmsListener(this.onPVFilmLoaded)
+        Store.removeGenreListener(this.onGenresLoaded)
     }
 
     ShowGenre = (id_genre) => {
@@ -32,37 +28,9 @@ class MovieCard extends React.Component {
         if (!genre) return '';
         return genre.name + ' '
     };
-   /* SearchFilmInPlanned = (id_film) => {
-        const pvFilms = this.state.pvFilms;
-        Object.keys(pvFilms).map((f) => {
-            const pF = pvFilms[f].planned.find((pf) => {
-                return pf === id_film;
-
-            });
-            this.setState({
-                plannedFilm:'true'
-            })
-        })
-    }
-    SearchFilmInViewed = (id_film) => {
-        const pvFilms = this.state.pvFilms;
-        Object.keys(pvFilms).map((f) => {
-            const vF = pvFilms[f].viewed.find((vf) => {
-                return vf === id_film
-            });
-            this.setState({
-               vievedFilm:'true'
-            })
-        });
-    };*/
     onGenresLoaded = () => {
         this.setState({
             genres: Store.getGenre()
-        })
-    };
-    onPVFilmLoaded = () => {
-        this.setState({
-            pvFilms: Store.getFilms()
         })
     };
     postViewedFilm = async (film) => {
@@ -71,27 +39,19 @@ class MovieCard extends React.Component {
         } catch (e) {
             console.log(e)
         }
-
+        this.props.getFilms(this.state.currentPage)
     };
-    postPlannedFilm = async (film) => {
-        try {
-            await axios.post("http://localhost/api/movie/planned", film);
-        } catch (e) {
-            console.log(e)
-        }
-    };
-
     render() {
-        const pvFilms = this.state.pvFilms;
-
         const films = this.props.films;
         return (
             <div className='row'>
                 {
                     films.map((film) => {
                         return <div key={film.id} className='col-md-3'>
+
                             <Card className='Card'>
-                                <Card.Img className='CardImg' variant='top' src={"https://image.tmdb.org/t/p/w185" + film.poster_path}></Card.Img>
+                                <Card.Img className='CardImg' variant='top'
+                                          src={"https://image.tmdb.org/t/p/w185" + film.poster_path}></Card.Img>
                                 <Card.Body>
 
                                     <Card.Title>{film.title}</Card.Title>
@@ -108,8 +68,8 @@ class MovieCard extends React.Component {
                                     </Card.Subtitle>
 
                                     <div className='buttons'>
-                                        <Button className='add' variant="primary"  onClick={() => this.postViewedFilm(film)}></Button>
-                                        <Button className='check' variant="primary"  onClick={() => this.postPlannedFilm(film)}></Button>
+                                        <Button className='add' variant="primary"
+                                                onClick={() => this.postViewedFilm(film)}></Button>
                                     </div>
 
                                 </Card.Body>
@@ -123,4 +83,4 @@ class MovieCard extends React.Component {
     }
 }
 
-export default MovieCard;
+export default PlannedMovieCard;

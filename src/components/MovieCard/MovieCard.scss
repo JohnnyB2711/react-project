@@ -8,9 +8,7 @@
 }
 
 .CardImg {
-  height: 70%;
-  width: 90%;
-  margin: 15px auto;
+  margin-top: 25px;
 }
 
 .genre {
@@ -42,12 +40,19 @@
 }
 
 .add {
-  background: url("./img/add.png");
+  background: url("./img/add.png") no-repeat;
   background-size: contain;
+}
+.delete{
+  background: url("./img/delete.png") no-repeat;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  position: absolute;
 }
 
 .check {
-  background: url("./img/check.png");
+  background: url("./img/check.png") no-repeat;
   background-size: contain;
 }
 

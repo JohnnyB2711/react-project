@@ -1,50 +1,59 @@
-import React from 'react'
-import MovieCard from "../../components/MovieCard/MovieCard";
-import '../Layouts.scss'
-import Store from "../../stores";
-import axios from 'axios'
-const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
-
-class Planed extends React.Component {
+import React from 'react';
+import PlannedMovieCard from "../../components/MovieCard/PlannedMovieCard";
+import '../Layouts.scss';
+import axios from "axios";
+import Pagination from 'rc-pagination';
+import 'rc-pagination/assets/index.css';
+import {Spinner} from 'react-bootstrap'
+class Planned extends React.Component {
     state = {
-        planedFilmsID: [],
-        planedFilms: []
-    }
+        films: [],
+        currentPage: 1,
+        total_pages: 0,
+        loading: true
+    };
 
     componentDidMount() {
-        //this.loadPlannedFilms()
-        Store.addFilmsListener(this.loadPlannedFilms)
+        this.getFilms(this.state.currentPage)
     }
-
-    componentWillUnmount() {
-        Store.removeFilmsListener(this.loadPlannedFilms)
-    }
-
-    loadPlannedFilms = () => {
+    getFilms = async (page_number) => {
         this.setState({
-            planedFilmsID: Store.getPlannedFilms()
-        })
+            loading: true
+        });
+        try {
+            const {data} = await axios.get(`http://localhost/api/movie/planned?page=${page_number}`);
+            await this.setState({
+                    films: data.data,
+                    total_pages: data.total/data.per_page,
+                    currentPage: page_number,
+                    loading: false
+                }
+            )
+        } catch {
+            console.log('error')
+        }
     };
-    getFilmName= ()=>{
-        this.state.planedFilmsID.map(async (id)=>{
-            try{
-                const {data} = await axios.get()
-
-            }catch (e) {
-               console.log(e)
-            }
-        })
-
-    }
     render() {
-        console.log(this.state.planedFilmsID)
+        console.log(this.state.films);
+        const isLoggedIn = this.state.loading;
         return (
-            <div className='container-fluid'>
-                <h1>Planed films</h1>
-                {/*<MovieCard/>*/}
+            <div className='Page container-fluid'>
+                <div className='Pagination'>
+                    <Pagination onChange={this.getFilms} current={this.state.currentPage} className="ant-pagination"
+                                defaultCurrent={this.state.currentPage} total={this.state.total_pages * 10}/>
+                </div>
+                <div className='PageFilm container-fluid'>
+                    <h1>Planned films</h1>
+                    {isLoggedIn ? (
+                        <Spinner animation="border" role="status"/>
+                    ) : (
+                        <PlannedMovieCard films={this.state.films} getfilms={this.getFilms}/>
+                    )}
+                </div>
+
             </div>
         )
     }
 }
 
-export default Planed
+export default Planned
