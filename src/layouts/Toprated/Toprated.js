@@ -10,12 +10,11 @@ const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
 class Toprated extends React.Component {
     state = {
-        films: [],
+        films: {},
         currentPage: 1,
         total_pages: 0,
         loading: true
     };
-
     componentDidMount() {
         this.getFilms(this.state.currentPage);
     }
@@ -36,9 +35,16 @@ class Toprated extends React.Component {
             console.log('error')
         }
     }
+    NewFilms = (updateFilm) => {
+        this.setState({
+            films: this.state.films.map((sourceFilm) => {
+                if (sourceFilm.id === updateFilm.id) return updateFilm;
+                return sourceFilm
+            })
+        })
 
+    };
     render() {
-        console.log(this.state.films)
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
@@ -51,7 +57,7 @@ class Toprated extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCard films={this.state.films}/>
+                        <MovieCard films={this.state.films} newFilms={this.NewFilms}/>
                     )}
                 </div>
 

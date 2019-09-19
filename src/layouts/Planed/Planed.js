@@ -47,7 +47,7 @@ class Planned extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <PlannedMovieCard films={this.state.films} getfilms={this.getFilms}/>
+                        <PlannedMovieCard films={this.state.films} getFilms={this.getFilms}/>
                     )}
                 </div>
 

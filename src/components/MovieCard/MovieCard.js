@@ -8,21 +8,18 @@ import axios from 'axios'
 class MovieCard extends React.Component {
     state = {
         genres: [],
-        pvFilms: [],
-        plannedFilm:'false',
-        vievedFilm:'false'
+        pvFilms: {}
     };
 
     componentDidMount() {
         this.onGenresLoaded();
-        this.onPVFilmLoaded();
         Store.addGenreListener(this.onGenresLoaded);
-        Store.addFilmsListener(this.onPVFilmLoaded)
+        Store.addFilmsListener(this.DownloadSelectedFilms)
     }
 
     componentWillUnmount() {
         Store.removeGenreListener(this.onGenresLoaded);
-        Store.removeFilmsListener(this.onPVFilmLoaded)
+        Store.removeFilmsListener(this.DownloadSelectedFilms)
     }
 
     ShowGenre = (id_genre) => {
@@ -32,38 +29,32 @@ class MovieCard extends React.Component {
         if (!genre) return '';
         return genre.name + ' '
     };
-   /* SearchFilmInPlanned = (id_film) => {
-        const pvFilms = this.state.pvFilms;
-        Object.keys(pvFilms).map((f) => {
-            const pF = pvFilms[f].planned.find((pf) => {
-                return pf === id_film;
-
+    AddingFilmNewOptions = () => {
+        this.props.films.forEach((film) => {
+            /*                        Object.defineProperties(film, {
+                            planned:this.state.pvFilms.planned.includes(film.id),
+                            viewed: this.state.pvFilms.viewed.includes(film.id)
+                        })
+                        this.props.newFilms(film)*/
+            //console.log(film)
+            this.props.newFilms({
+                ...film,
+               planned: this.state.pvFilms.planned.includes(film.id),
+              viewed: this.state.pvFilms.viewed.includes(film.id)
             });
-            this.setState({
-                plannedFilm:'true'
-            })
         })
-    }
-    SearchFilmInViewed = (id_film) => {
-        const pvFilms = this.state.pvFilms;
-        Object.keys(pvFilms).map((f) => {
-            const vF = pvFilms[f].viewed.find((vf) => {
-                return vf === id_film
-            });
-            this.setState({
-               vievedFilm:'true'
-            })
-        });
-    };*/
+    };
     onGenresLoaded = () => {
         this.setState({
             genres: Store.getGenre()
         })
     };
-    onPVFilmLoaded = () => {
+    DownloadSelectedFilms = () => {
         this.setState({
             pvFilms: Store.getFilms()
-        })
+        }, () =>
+            this.AddingFilmNewOptions())
+
     };
     postViewedFilm = async (film) => {
         try {
@@ -82,16 +73,21 @@ class MovieCard extends React.Component {
     };
 
     render() {
-        const pvFilms = this.state.pvFilms;
-
         const films = this.props.films;
+
+        for (let film in Object.keys(this.props.films))
+        {
+            console.log(...film)
+            console.log(film)
+        }
         return (
             <div className='row'>
                 {
                     films.map((film) => {
                         return <div key={film.id} className='col-md-3'>
                             <Card className='Card'>
-                                <Card.Img className='CardImg' variant='top' src={"https://image.tmdb.org/t/p/w185" + film.poster_path}></Card.Img>
+                                <Card.Img className='CardImg' variant='top'
+                                          src={"https://image.tmdb.org/t/p/w185" + film.poster_path}></Card.Img>
                                 <Card.Body>
 
                                     <Card.Title>{film.title}</Card.Title>
@@ -108,8 +104,12 @@ class MovieCard extends React.Component {
                                     </Card.Subtitle>
 
                                     <div className='buttons'>
-                                        <Button className='add' variant="primary"  onClick={() => this.postViewedFilm(film)}></Button>
-                                        <Button className='check' variant="primary"  onClick={() => this.postPlannedFilm(film)}></Button>
+                                        <Button className='add' variant="primary"
+                                                disabled={film.viewed}
+                                                onClick={() => this.postViewedFilm(film)}></Button>
+                                        <Button className='check' variant="primary"
+                                                disabled={film.planned}
+                                                onClick={() => this.postPlannedFilm(film)}></Button>
                                     </div>
 
                                 </Card.Body>

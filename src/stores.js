@@ -6,21 +6,15 @@ let Store = Object.assign({}, EventEmitter.prototype, {
         items: [],
         planedFilms: [],
         viewedFilms: [],
-        films: []
-    },
-    getPlannedFilms: function () {
-        return this.state.planedFilms;
+        films: {}
     },
     getFilms: function () {
         return this.state.films;
     },
-    getViewedFilms: function () {
-        return this.state.viewedFilms;
-    },
     setMovieList: function (data) {
-        this.state.films.push(data);
-        this.state.planedFilms.push(...data.planned);
-        this.state.viewedFilms.push(...data.viewed);
+        this.state.films=data;
+/*        this.state.planedFilms.push(...data.planned);
+        this.state.viewedFilms.push(...data.viewed);*/
         this.emit('LOAD_FILMS')
     },
     addFilmsListener(callback) {
