@@ -20,17 +20,16 @@ class App extends React.Component {
     state = {
         inputValue: ''
     };
-
     componentDidMount() {
-        this.getGenre();
-        this.getPlanedAndViewedFilms()
+        this.DownloadGenres();
+        this.GetPlanedAndViewedFilms()
     }
 
-    getPlanedAndViewedFilms = async () => {
+    GetPlanedAndViewedFilms = async () => {
         try {
-            const {data} = await axios.get ("http://localhost/api/movie/viewedandplanned");
+            const {data} = await axios.get("http://localhost/api/movie/viewedandplanned");
             Dispatcher.dispatch({
-                action: 'LOAD_FILMS',
+                action: 'LOAD_SELECTED_FILMS',
                 films: data
             });
         } catch (e) {
@@ -38,18 +37,19 @@ class App extends React.Component {
         }
     };
 
-    getGenre = async () => {
+    DownloadGenres = async () => {
         try {
             const {data} = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
             Dispatcher.dispatch({
-                action: 'LOAD_GENRE',
+                action: 'LOAD_GENRES',
                 genre: data.genres
             });
         } catch (e) {
             console.log(e)
         }
     };
-    updateValue = (value) => {
+
+    UpdateInputValue = (value) => {
         this.setState({
             inputValue: value
         })
@@ -59,7 +59,7 @@ class App extends React.Component {
         return (
             <div className='container col-10'>
 
-                <Header updateValue={this.updateValue}/>
+                <Header InputValue={this.UpdateInputValue}/>
 
                 <Menu/>
                 <Switch>

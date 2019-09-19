@@ -8,12 +8,12 @@ class Header extends React.Component {
         inputValue: ''
     };
 
-    updateInputValue = event => {
+    UpdateInputValue = (event) => {
         this.setState({inputValue: event.target.value});
-        this.props.updateValue(this.state.inputValue)
+        this.props.InputValue(this.state.inputValue)
 
     };
-    Search=(line)=>{
+    SearchFilms=(line)=>{
         this.props.history.push(`/search/${line}`);
     };
     render() {
@@ -25,10 +25,10 @@ class Header extends React.Component {
                         <InputGroup className="SearchInput mb-3">
                             <FormControl
                                 placeholder="Введите фильм для поиска"
-                                onChange={this.updateInputValue}/>
+                                onChange={this.UpdateInputValue}/>
                         </InputGroup>
                         <Button className='SearchButton'
-                                onClick={() => this.Search(this.state.inputValue)}></Button>
+                                onClick={() => this.SearchFilms(this.state.inputValue)}></Button>
                     </div>
                 </div>
             </header>

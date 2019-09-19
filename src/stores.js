@@ -4,8 +4,6 @@ import {EventEmitter} from 'events'
 let Store = Object.assign({}, EventEmitter.prototype, {
     state: {
         items: [],
-        planedFilms: [],
-        viewedFilms: [],
         films: {}
     },
     getFilms: function () {
@@ -13,18 +11,14 @@ let Store = Object.assign({}, EventEmitter.prototype, {
     },
     setMovieList: function (data) {
         this.state.films=data;
-/*        this.state.planedFilms.push(...data.planned);
-        this.state.viewedFilms.push(...data.viewed);*/
-        this.emit('LOAD_FILMS')
+        this.emit('LOAD_SELECTED_FILMS')
     },
     addFilmsListener(callback) {
-        this.addListener('LOAD_FILMS', callback)
+        this.addListener('LOAD_SELECTED_FILMS', callback)
     },
     removeFilmsListener(callback) {
-        this.removeListener('LOAD_FILMS', callback)
+        this.removeListener('LOAD_SELECTED_FILMS', callback)
     },
-
-
     getGenre: function () {
         return this.state.items;
     },
@@ -41,10 +35,10 @@ let Store = Object.assign({}, EventEmitter.prototype, {
 });
 Dispatcher.register(function (payload) {
     switch (payload.action) {
-        case 'LOAD_GENRE':
+        case 'LOAD_GENRES':
             Store.setGenreList(payload.genre);
             break;
-        case 'LOAD_FILMS':
+        case 'LOAD_SELECTED_FILMS':
             Store.setMovieList(payload.films);
     }
 });
