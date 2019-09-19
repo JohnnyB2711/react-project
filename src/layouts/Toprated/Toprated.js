@@ -5,6 +5,7 @@ import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
+import Store from "../../stores";
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
@@ -13,11 +14,21 @@ class Toprated extends React.Component {
         films: {},
         currentPage: 1,
         total_pages: 0,
-        loading: true
+        loading: true,
+        pvFilms: {}
     };
     componentDidMount() {
         this.getFilms(this.state.currentPage);
+        Store.addFilmsListener(this.DownloadSelectedFilms)
     }
+    componentWillUnmount() {
+        Store.removeFilmsListener(this.DownloadSelectedFilms)
+    }
+    DownloadSelectedFilms = () => {
+        this.setState({
+            pvFilms: Store.getFilms()
+        })
+    };
     getFilms = async (page_number) => {
         this.setState({
             loading: true
@@ -29,22 +40,33 @@ class Toprated extends React.Component {
                     total_pages: data.total_pages,
                     currentPage: page_number,
                     loading: false
-                }
+                },()=>this.DownloadSelectedFilms(),() =>this.NewFilms(this.state.films)
             )
         } catch {
             console.log('error')
         }
     }
     NewFilms = (updateFilm) => {
-        this.setState({
+        /*this.setState({
             films: this.state.films.map((sourceFilm) => {
                 if (sourceFilm.id === updateFilm.id) return updateFilm;
                 return sourceFilm
             })
         })
+*/
+        this.setState({
+            films: this.state.films.map((sourceFilm) => {
+                 return Object.defineProperties(sourceFilm, {
+                    planned:this.state.pvFilms.planned.includes(sourceFilm.id),
+                    viewed: this.state.pvFilms.viewed.includes(sourceFilm.id)
+                })
+            })
+        })
 
     };
     render() {
+        console.log(this.state.films)
+        console.log(this.state.pvFilms)
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>

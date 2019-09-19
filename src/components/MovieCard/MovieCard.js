@@ -14,12 +14,12 @@ class MovieCard extends React.Component {
     componentDidMount() {
         this.onGenresLoaded();
         Store.addGenreListener(this.onGenresLoaded);
-        Store.addFilmsListener(this.DownloadSelectedFilms)
+        //Store.addFilmsListener(this.DownloadSelectedFilms)
     }
 
     componentWillUnmount() {
         Store.removeGenreListener(this.onGenresLoaded);
-        Store.removeFilmsListener(this.DownloadSelectedFilms)
+        //Store.removeFilmsListener(this.DownloadSelectedFilms)
     }
 
     ShowGenre = (id_genre) => {
@@ -73,13 +73,9 @@ class MovieCard extends React.Component {
     };
 
     render() {
+        //console.log(this.state.pvFilms)
         const films = this.props.films;
-
-        for (let film in Object.keys(this.props.films))
-        {
-            console.log(...film)
-            console.log(film)
-        }
+        //console.log(films)
         return (
             <div className='row'>
                 {
