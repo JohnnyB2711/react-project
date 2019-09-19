@@ -7,19 +7,18 @@ import axios from 'axios'
 
 class MovieCard extends React.Component {
     state = {
-        genres: [],
-        pvFilms: {}
+        genres: []
     };
 
     componentDidMount() {
         this.onGenresLoaded();
         Store.addGenreListener(this.onGenresLoaded);
-        //Store.addFilmsListener(this.DownloadSelectedFilms)
+        Store.addFilmsListener(this.onMoviesListLoaded)
     }
 
     componentWillUnmount() {
         Store.removeGenreListener(this.onGenresLoaded);
-        //Store.removeFilmsListener(this.DownloadSelectedFilms)
+        Store.removeFilmsListener(this.onMoviesListLoaded)
     }
 
     ShowGenre = (id_genre) => {
@@ -29,33 +28,21 @@ class MovieCard extends React.Component {
         if (!genre) return '';
         return genre.name + ' '
     };
-    AddingFilmNewOptions = () => {
-        this.props.films.forEach((film) => {
-            /*                        Object.defineProperties(film, {
-                            planned:this.state.pvFilms.planned.includes(film.id),
-                            viewed: this.state.pvFilms.viewed.includes(film.id)
-                        })
-                        this.props.newFilms(film)*/
-            //console.log(film)
-            this.props.newFilms({
-                ...film,
-               planned: this.state.pvFilms.planned.includes(film.id),
-              viewed: this.state.pvFilms.viewed.includes(film.id)
-            });
-        })
-    };
     onGenresLoaded = () => {
         this.setState({
             genres: Store.getGenre()
         })
     };
-    DownloadSelectedFilms = () => {
-        this.setState({
-            pvFilms: Store.getFilms()
-        }, () =>
-            this.AddingFilmNewOptions())
-
-    };
+    onMoviesListLoaded = () => {
+        let moviesId = Store.getFilms()
+        this.props.films.forEach(movie => {
+            this.props.updateMoviesAttrs({
+                ...movie,
+                planned: moviesId.planned.includes(movie.id),
+                viewed: moviesId.viewed.includes(movie.id)
+            })
+        })
+    }
     postViewedFilm = async (film) => {
         try {
             await axios.post("http://localhost/api/movie/viewed", film);

@@ -46,23 +46,10 @@ class Toprated extends React.Component {
             console.log('error')
         }
     }
-    NewFilms = (updateFilm) => {
-        /*this.setState({
-            films: this.state.films.map((sourceFilm) => {
-                if (sourceFilm.id === updateFilm.id) return updateFilm;
-                return sourceFilm
-            })
-        })
-*/
+    updateMoviesAttrs = newMovie => {
         this.setState({
-            films: this.state.films.map((sourceFilm) => {
-                 return Object.defineProperties(sourceFilm, {
-                    planned:this.state.pvFilms.planned.includes(sourceFilm.id),
-                    viewed: this.state.pvFilms.viewed.includes(sourceFilm.id)
-                })
-            })
+            films: this.state.films.map(oldMovie => oldMovie.id === newMovie.id ? newMovie : oldMovie)
         })
-
     };
     render() {
         console.log(this.state.films)
@@ -79,7 +66,7 @@ class Toprated extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCard films={this.state.films} newFilms={this.NewFilms}/>
+                        <MovieCard films={this.state.films} updateMoviesAttrs={this.updateMoviesAttrs}/>
                     )}
                 </div>
 
