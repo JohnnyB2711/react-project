@@ -42,6 +42,7 @@ class PlannedMovieCard extends React.Component {
         this.props.getFilms(this.state.currentPage)
     };
     render() {
+
         const films = this.props.films;
         return (
             <div className='row'>

@@ -17,13 +17,17 @@ class Toprated extends React.Component {
         loading: true,
         pvFilms: {}
     };
+
     componentDidMount() {
+        this.DownloadSelectedFilms();
         this.getFilms(this.state.currentPage);
         Store.addFilmsListener(this.DownloadSelectedFilms)
     }
+
     componentWillUnmount() {
         Store.removeFilmsListener(this.DownloadSelectedFilms)
     }
+
     DownloadSelectedFilms = () => {
         this.setState({
             pvFilms: Store.getFilms()
@@ -40,33 +44,21 @@ class Toprated extends React.Component {
                     total_pages: data.total_pages,
                     currentPage: page_number,
                     loading: false
-                },()=>this.DownloadSelectedFilms(),() =>this.NewFilms(this.state.films)
+                }, () => this.DownloadSelectedFilms(), () => this.NewFilms(this.state.films)
             )
         } catch {
             console.log('error')
         }
     }
-    NewFilms = (updateFilm) => {
-        /*this.setState({
-            films: this.state.films.map((sourceFilm) => {
-                if (sourceFilm.id === updateFilm.id) return updateFilm;
-                return sourceFilm
-            })
-        })
-*/
+    updateMoviesAttrs = newMovie => {
         this.setState({
-            films: this.state.films.map((sourceFilm) => {
-                 return Object.defineProperties(sourceFilm, {
-                    planned:this.state.pvFilms.planned.includes(sourceFilm.id),
-                    viewed: this.state.pvFilms.viewed.includes(sourceFilm.id)
-                })
-            })
+            films: this.state.films.map(oldMovie => oldMovie.id === newMovie.id ? newMovie : oldMovie)
         })
-
     };
+
     render() {
-        console.log(this.state.films)
-        console.log(this.state.pvFilms)
+              console.log(this.state.films)
+        /*          console.log(this.state.pvFilms)*/
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
@@ -79,7 +71,7 @@ class Toprated extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCard films={this.state.films} newFilms={this.NewFilms}/>
+                        <MovieCard films={this.state.films} updateMoviesAttrs={this.updateMoviesAttrs}/>
                     )}
                 </div>
 
