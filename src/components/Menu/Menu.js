@@ -1,37 +1,40 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
-import {Navbar,Nav,NavDropdown} from 'react-bootstrap'
+import {Navbar, Nav, NavDropdown} from 'react-bootstrap'
 import {Link} from 'react-router-dom'
 import './Menu.scss'
 import Store from "../../stores";
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
 
-class Menu extends React.Component{
-    state={
-        genres:[],
-        actionGenre:'Genre'
+class Menu extends React.Component {
+    state = {
+        genres: [],
+        actionGenre: 'Genre'
     }
+
     componentDidMount() {
-        Store.addGenreListener((items)=>{
+        Store.addGenreListener((items) => {
             this.setState({
-                genres:Store.getGenre()
+                genres: Store.getGenre()
             })
         })
 
     }
-    componentWillUnmount(){
+
+    componentWillUnmount() {
         Store.removeGenreListener()
     }
-    CheckGenre = (item) => {
+
+    checkGenre = (item) => {
         this.setState({
-            actionGenre:item.name
+            actionGenre: item.name
         })
     };
 
-    render(){
+    render() {
         return (
             <Navbar collapseOnSelect expand="md">
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className='MenuItems'>
                         <Link to='/'>Top rated</Link>
@@ -42,12 +45,10 @@ class Menu extends React.Component{
                         <NavDropdown title={this.state.actionGenre} id='/collasible-nav-dropdown'>
                             {
                                 this.state.genres.map((item) => {
-                                    return <NavDropdown.Item onClick={()=>{
+                                    return <NavDropdown.Item onClick={() => {
                                         this.props.history.push(`/genre/${item.id}`);
-                                        this.setState({
-                                            actionGenre:item.name
-                                        })
-                                    }}key={item.id}>{item.name}</NavDropdown.Item>
+                                        this.checkGenre(item);
+                                    }} key={item.id}>{item.name}</NavDropdown.Item>
                                 })
                             }
                         </NavDropdown>
@@ -57,4 +58,5 @@ class Menu extends React.Component{
         )
     }
 }
-export default withRouter (Menu)
+
+export default withRouter(Menu)

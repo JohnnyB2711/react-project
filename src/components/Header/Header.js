@@ -2,20 +2,22 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import {Button, InputGroup, FormControl} from 'react-bootstrap';
 import './Header.scss'
-import { withRouter } from 'react-router';
+import {withRouter} from 'react-router';
+
 class Header extends React.Component {
     state = {
         inputValue: ''
     };
 
-    UpdateInputValue = (event) => {
-        this.setState({inputValue: event.target.value});
-        this.props.InputValue(this.state.inputValue)
+    updateInputValue = (event) => {
+        this.setState({value: event.target.value});
+        this.props.inputValue(this.state.inputValue)
 
     };
-    SearchFilms=(line)=>{
+    searchFilms = (line) => {
         this.props.history.push(`/search/${line}`);
     };
+
     render() {
         return (
             <header className='container-fluid Header d-flex flex-row'>
@@ -25,14 +27,15 @@ class Header extends React.Component {
                         <InputGroup className="SearchInput mb-3">
                             <FormControl
                                 placeholder="Введите фильм для поиска"
-                                onChange={this.UpdateInputValue}/>
+                                onChange={this.updateInputValue}/>
                         </InputGroup>
                         <Button className='SearchButton'
-                                onClick={() => this.SearchFilms(this.state.inputValue)}></Button>
+                                onClick={() => this.searchFilms(this.state.value)}></Button>
                     </div>
                 </div>
             </header>
         )
     }
 }
+
 export default withRouter(Header);

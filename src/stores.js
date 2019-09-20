@@ -6,11 +6,11 @@ let Store = Object.assign({}, EventEmitter.prototype, {
         items: [],
         films: {}
     },
-    getFilms: function () {
+    getMovies: function () {
         return this.state.films;
     },
     setMovieList: function (data) {
-        this.state.films=data;
+        this.state.films = data;
         this.emit('LOAD_SELECTED_FILMS')
     },
     addFilmsListener(callback) {
