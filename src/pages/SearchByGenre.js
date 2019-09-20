@@ -7,7 +7,7 @@ import {Spinner} from 'react-bootstrap'
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
-class SearcheByGenre extends React.Component {
+class SearchByGenre extends React.Component {
     state = {
         movies: [],
         currentPage: 1,
@@ -65,5 +65,5 @@ class SearcheByGenre extends React.Component {
     }
 }
 
-export default SearcheByGenre
+export default SearchByGenre
 

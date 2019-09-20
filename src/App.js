@@ -4,12 +4,12 @@ import Menu from './components/Menu/Menu'
 import Footer from './components/Footer/Footer'
 import SearchMovies from "./pages/SearchMovies";
 import {Route, Switch} from 'react-router-dom'
-import TopRatedMovies from "./pages/TopratedMovies";
+import TopRatedMovies from "./pages/TopRatedMovies";
 import UpcomingMovies from "./pages/UpcomingMovies";
 import PopularMovies from "./pages/PopularMovies";
 import ViewedMovies from "./pages/ViewedMovies";
 import PlannedMovies from "./pages/PlannedMovies";
-import SearchByGenre from "./pages/SearcheByGenre";
+import SearchByGenre from "./pages/SearchByGenre";
 import axios from "axios";
 import Dispatcher from './dispatcher';
 import 'bootstrap/dist/css/bootstrap.css'
