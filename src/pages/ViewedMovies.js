@@ -1,9 +1,9 @@
 import React from 'react';
 import ViewedMovieCard from "../components/MovieCards/MovieCards";
-import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
+import {getViewedMovies} from '../actions'
 
 class ViewedMovies extends React.Component {
     state = {
@@ -22,7 +22,7 @@ class ViewedMovies extends React.Component {
             loading: true
         });
         try {
-            const {data} = await axios.get(`http://localhost/api/movie/viewed?page=${pageNumber}`);
+            const data = await getViewedMovies(pageNumber);
             await this.setState({
                     movies: data.data,
                     totalPages: data.total / data.per_page,

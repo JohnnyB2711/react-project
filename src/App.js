@@ -10,10 +10,9 @@ import PopularMovies from "./pages/PopularMovies";
 import ViewedMovies from "./pages/ViewedMovies";
 import PlannedMovies from "./pages/PlannedMovies";
 import SearchByGenre from "./pages/SearchByGenre";
-import axios from "axios";
-import Dispatcher from './dispatcher';
 import 'bootstrap/dist/css/bootstrap.css'
 import '../src/pages/PagesStyle.scss';
+import {getPlanedAndViewedMovies, downloadGenres} from './actions'
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
@@ -21,34 +20,11 @@ class App extends React.Component {
     state = {
         inputValue: ''
     };
+
     componentDidMount() {
-        this.downloadGenres();
-        this.getPlanedAndViewedFilms()
+        downloadGenres();
+        getPlanedAndViewedMovies()
     }
-
-    getPlanedAndViewedFilms = async () => {
-        try {
-            const {data} = await axios.get("http://localhost/api/movie/viewedandplanned");
-            Dispatcher.dispatch({
-                action: 'LOAD_SELECTED_FILMS',
-                films: data
-            });
-        } catch (e) {
-            console.log(e)
-        }
-    };
-
-    downloadGenres = async () => {
-        try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
-            Dispatcher.dispatch({
-                action: 'LOAD_GENRES',
-                genre: data.genres
-            });
-        } catch (e) {
-            console.log(e)
-        }
-    };
 
     updateInputValue = (value) => {
         this.setState({

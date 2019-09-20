@@ -1,11 +1,9 @@
 import React from 'react';
 import MovieCards from "../components/MovieCards/MovieCards";
-import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
-
-const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
+import {searchByGenre} from '../actions'
 
 class SearchByGenre extends React.Component {
     state = {
@@ -30,7 +28,7 @@ class SearchByGenre extends React.Component {
             loading: true
         });
         try {
-            const {data} = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&page=${pageNumber}&with_genres=${this.props.match.params.genre}`);
+            const data = await searchByGenre(this.props.match.params.genre, pageNumber);
             await this.setState({
                     movies: data.results,
                     totalPages: data.total_pages,
