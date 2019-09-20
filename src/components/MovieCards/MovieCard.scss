@@ -41,27 +41,19 @@
 }
 
 .add {
-  background: url("./img/add.png") no-repeat;
+  background: url("img/ActiveViewedButton.png") no-repeat;
   background-size: contain;
 }
 .add:disabled{
-  background: url("./img/disabled2.png") no-repeat;
+  background: url("img/InActiveViewedButton.png") no-repeat;
   background-size: contain;
-}
-
-.delete{
-  background: url("./img/delete.png") no-repeat;
-  background-size: contain;
-  width: 20px;
-  height: 20px;
-  position: absolute;
 }
 .check {
-  background: url("./img/check.png") no-repeat;
+  background: url("img/ActivePlannedButton.png") no-repeat;
   background-size: contain;
 }
 .check:disabled{
-  background:url("./img/disabled.png") no-repeat!important;
+  background:url("img/InActivePlannedButton.png") no-repeat!important;
   background-size: contain!important;
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import MovieCard from "../../components/MovieCard/MovieCard";
-import '../Layouts.scss';
+import MovieCard from "../components/MovieCards/MovieCard";
+import './PagesStyle.scss';
 import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
@@ -8,7 +8,7 @@ import {Spinner} from 'react-bootstrap'
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
-class Genre extends React.Component {
+class SearcheByGenre extends React.Component {
     state = {
         films: [],
         currentPage: 1,
@@ -65,5 +65,5 @@ class Genre extends React.Component {
 }
 
 
-export default Genre
+export default SearcheByGenre
 

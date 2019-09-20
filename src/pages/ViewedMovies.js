@@ -1,11 +1,11 @@
 import React from 'react';
-import PlannedMovieCard from "../../components/MovieCard/PlannedMovieCard";
-import '../Layouts.scss';
+import ViewedMovieCard from "../components/MovieCards/MovieCard";
+import './PagesStyle.scss';
 import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
-class Planned extends React.Component {
+class ViewedMovies extends React.Component {
     state = {
         films: [],
         currentPage: 1,
@@ -21,7 +21,7 @@ class Planned extends React.Component {
             loading: true
         });
         try {
-            const {data} = await axios.get(`http://localhost/api/movie/planned?page=${page_number}`);
+            const {data} = await axios.get(`http://localhost/api/movie/viewed?page=${page_number}`);
             await this.setState({
                     films: data.data,
                     total_pages: data.total/data.per_page,
@@ -33,8 +33,19 @@ class Planned extends React.Component {
             console.log('error')
         }
     };
+    // removeViewedFilm = (film) => {
+    //     this.setState((prevState) => ({
+    //         films: prevState.films.filter(stateFilm => stateFilm.id !== film.id)
+    //     }));
+    // };
+    // postFilmAfterDelete = async (films) => {
+    //     try {
+    //         await axios.post("http://localhost/api/movie/planned", films);
+    //     } catch {
+    //         console.log('error')
+    //     }
+    // };
     render() {
-        console.log(this.state.films);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
@@ -43,11 +54,11 @@ class Planned extends React.Component {
                                 defaultCurrent={this.state.currentPage} total={this.state.total_pages * 10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
-                    <h1>Planned films</h1>
+                    <h1>Viewed films</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <PlannedMovieCard films={this.state.films} getFilms={this.getFilms}/>
+                        <ViewedMovieCard films={this.state.films} />
                     )}
                 </div>
 
@@ -55,5 +66,4 @@ class Planned extends React.Component {
         )
     }
 }
-
-export default Planned
+export default ViewedMovies

@@ -2,15 +2,15 @@ import React from 'react';
 import Header from './components/Header/Header'
 import Menu from './components/Menu/Menu'
 import Footer from './components/Footer/Footer'
-import SearchMovie from "./layouts/SearchMovie/SearchMovie";
+import SearchMovies from "./pages/SearchMovies";
 import 'bootstrap/dist/css/bootstrap.css'
 import {Route, Switch} from 'react-router-dom'
-import Toprated from "./layouts/Toprated/Toprated";
-import Upcoming from "./layouts/Upcoming/Upcoming";
-import Popular from "./layouts/Popular/Popular";
-import Viewed from "./layouts/Viewed/Viewed";
-import Planed from "./layouts/Planed/Planed";
-import Genre from "./layouts/Genre/Genre";
+import TopratedMovies from "./pages/TopratedMovies";
+import UpcomingMovies from "./pages/UpcomingMovies";
+import PopularMovies from "./pages/PopularMovies";
+import ViewedMovies from "./pages/ViewedMovies";
+import Planed from "./pages/PlannedMovies";
+import SearcheByGenre from "./pages/SearcheByGenre";
 import axios from "axios";
 import Dispatcher from './dispatcher';
 
@@ -63,13 +63,13 @@ class App extends React.Component {
 
                 <Menu/>
                 <Switch>
-                    <Route exact path='/' component={Toprated}/>
-                    <Route path='/upcoming' component={Upcoming}/>
-                    <Route path='/popular' component={Popular}/>
-                    <Route path='/viewed' component={Viewed}/>
+                    <Route exact path='/' component={TopratedMovies}/>
+                    <Route path='/upcoming' component={UpcomingMovies}/>
+                    <Route path='/popular' component={PopularMovies}/>
+                    <Route path='/viewed' component={ViewedMovies}/>
                     <Route path='/planed' component={Planed}/>
-                    <Route path='/genre/:Genre' component={Genre}/>
-                    <Route path='/search/:Line' component={SearchMovie}/>
+                    <Route path='/genre/:Genre' component={SearcheByGenre}/>
+                    <Route path='/search/:Line' component={SearchMovies}/>
                 </Switch>
                 <Footer/>
             </div>

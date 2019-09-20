@@ -1,15 +1,15 @@
 import React from 'react';
-import MovieCard from "../../components/MovieCard/MovieCard";
-import '../Layouts.scss';
+import MovieCard from "../components/MovieCards/MovieCard";
+import './PagesStyle.scss';
 import axios from "axios";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
-import Store from "../../stores";
+import Store from "../stores";
 
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
-class Toprated extends React.Component {
+class TopratedMovies extends React.Component {
     state = {
         films: {},
         currentPage: 1,
@@ -67,7 +67,7 @@ class Toprated extends React.Component {
                                 defaultCurrent={this.state.currentPage} total={this.state.total_pages * 10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
-                    <h1>Top rated films</h1>
+                    <h1>Top rated movies</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
@@ -81,4 +81,4 @@ class Toprated extends React.Component {
 }
 
 
-export default Toprated
+export default TopratedMovies
