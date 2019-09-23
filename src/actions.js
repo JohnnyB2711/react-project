@@ -15,9 +15,19 @@ function getBackendUrl(url) {
 
 export async function getPlannedMovies(page) {
     const {data} = await axios.get(getBackendUrl('/planned'), {
-        page
+        params: {
+            page
+        }
     });
     return data
+}
+
+export async function postPlannedMovie(movie) {
+    try {
+        await axios.post(getBackendUrl('/planned'), movie);
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export async function getViewedMovies(page) {
@@ -27,6 +37,14 @@ export async function getViewedMovies(page) {
         }
     });
     return data
+}
+
+export async function postViewedMovie(movie) {
+    try {
+        await axios.post(getBackendUrl('/viewed'), movie);
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 export async function getPlanedAndViewedMovies() {
@@ -55,7 +73,6 @@ export async function downloadGenres() {
     } catch (e) {
         console.log(e)
     }
-    //return data
 }
 
 export async function searchMovie(line, page) {

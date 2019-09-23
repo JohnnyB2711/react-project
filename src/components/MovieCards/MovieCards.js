@@ -3,6 +3,7 @@ import {Button, Card} from 'react-bootstrap';
 import './MovieCards.scss'
 import Store from "../../stores";
 import axios from 'axios'
+import {postPlannedMovie,postViewedMovie} from '../../actions'
 
 class MovieCards extends React.Component {
     state = {
@@ -41,19 +42,8 @@ class MovieCards extends React.Component {
         })
     };
     postViewedMovie = async (movie) => {
-        try {
-            await axios.post("http://localhost/api/movie/viewed", movie);
-        } catch (e) {
-            console.log(e)
-        }
-        await this.props.getMovies()
-    };
-    postPlannedMovie = async (movie) => {
-        try {
-            await axios.post("http://localhost/api/movie/planned", movie);
-        } catch (e) {
-            console.log(e)
-        }
+        await postViewedMovie(movie);
+        this.props.getMovies()
     };
 
     render() {
@@ -87,7 +77,7 @@ class MovieCards extends React.Component {
                                                 onClick={() => this.postViewedMovie(movie)}></Button>
                                         <Button className='check' variant="primary"
                                                 disabled={movie.viewed == true ? !movie.planned : movie.planned}
-                                                onClick={() => this.postPlannedMovie(movie)}></Button>
+                                                onClick={() => postPlannedMovie(movie)}></Button>
                                     </div>
 
                                 </Card.Body>
