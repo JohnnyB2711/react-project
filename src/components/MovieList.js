@@ -1,12 +1,12 @@
 import React from 'react';
-import MovieCards from "../components/MovieCards/MovieCards";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
-import {Spinner} from 'react-bootstrap'
-import {getUpcomingMovies} from '../actions'
-import MovieCard from "../components/MovieCards/MovieCard";
+import {Spinner} from 'react-bootstrap';
+import Store from "../stores";
+import {getTopRatedMovies} from '../actions'
+import MovieCard from "./MovieCards/MovieCard";
 
-class UpcomingMovies extends React.Component {
+class MovieList extends React.Component {
     state = {
         movies: {},
         currentPage: 1,
@@ -16,15 +16,26 @@ class UpcomingMovies extends React.Component {
     };
 
     componentDidMount() {
+        //this.DownloadSelectedFilms();
         this.getMovies(this.state.currentPage);
+        Store.addFilmsListener(this.DownloadSelectedFilms)
     }
 
+    componentWillUnmount() {
+        Store.removeFilmsListener(this.DownloadSelectedFilms)
+    }
+
+    DownloadSelectedFilms = () => {
+        this.setState({
+            selectedMovies: Store.getMovies()
+        })
+    };
     getMovies = async (pageNumber) => {
         this.setState({
             loading: true
         });
         try {
-            const data = await getUpcomingMovies(pageNumber)
+            const data = await getTopRatedMovies(pageNumber);
             await this.setState({
                     movies: data.results,
                     totalPages: data.total_pages,
@@ -43,6 +54,7 @@ class UpcomingMovies extends React.Component {
     };
 
     render() {
+        console.log(this.state.movies);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
@@ -51,7 +63,7 @@ class UpcomingMovies extends React.Component {
                                 defaultCurrent={this.state.currentPage} total={this.state.totalPages * 10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
-                    <h1>Upcoming movies</h1>
+                    <h1>Top rated movies</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
@@ -59,18 +71,16 @@ class UpcomingMovies extends React.Component {
                             {
                                 this.state.movies.map((movie) => {
                                     return <div key={movie.id} className='col-md-2'>
-                                        <MovieCard movie={movie} updateMoviesAttrs={this.updateMoviesAttrs}/>
+                                        <MovieCard movie={movie}/>
                                     </div>
                                 })
                             }
                         </div>
-                        //<MovieCards movies={this.state.movies} updateMoviesAttrs={this.updateMoviesAttrs}/>
                     )}
                 </div>
-
             </div>
         )
     }
 }
 
-export default UpcomingMovies
+export default MovieList

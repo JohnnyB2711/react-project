@@ -4,6 +4,7 @@ import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
 import {getPopularMovies} from '../actions'
+import MovieCard from "../components/MovieCards/MovieCard";
 
 class PopularMovies extends React.Component {
     state = {
@@ -54,7 +55,16 @@ class PopularMovies extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCards movies={this.state.movies} updateMoviesAttrs={this.updateMoviesAttrs}/>
+                        <div className='row'>
+                            {
+                                this.state.movies.map((movie) => {
+                                    return <div key={movie.id} className='col-md-2'>
+                                        <MovieCard movie={movie} updateMoviesAttrs={this.updateMoviesAttrs}/>
+                                    </div>
+                                })
+                            }
+                        </div>
+                        //<MovieCards movies={this.state.movies} updateMoviesAttrs={this.updateMoviesAttrs}/>
                     )}
                 </div>
 
