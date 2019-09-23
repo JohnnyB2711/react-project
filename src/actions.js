@@ -50,6 +50,7 @@ export async function postViewedMovie(movie) {
 export async function getPlanedAndViewedMovies() {
     try {
         const {data} = await axios.get(getBackendUrl('/viewedandplanned'));
+        console.log(data)
         Dispatcher.dispatch({
             action: 'LOAD_SELECTED_FILMS',
             films: data

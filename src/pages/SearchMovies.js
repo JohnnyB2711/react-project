@@ -3,7 +3,7 @@ import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
 import {searchMovie} from '../actions'
-import MovieCard from "../components/MovieCards/MovieCard";
+import MovieCard from "../components/MovieCard/MovieCard";
 
 class SearchMovies extends React.Component {
     state = {

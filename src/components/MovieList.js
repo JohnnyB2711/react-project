@@ -3,7 +3,7 @@ import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap';
 import Store from "../stores";
-import MovieCard from "./MovieCards/MovieCard";
+import MovieCard from "./MovieCard/MovieCard";
 
 class MovieList extends React.Component {
     state = {
@@ -15,36 +15,40 @@ class MovieList extends React.Component {
     };
 
     componentDidMount() {
-        this.getMovies(this.state.currentPage);
-        Store.addFilmsListener(this.DownloadSelectedFilms);
+        this.downloadSelectedFilm();
+        this.GetMovies(this.state.currentPage);
+        Store.addFilmsListener(this.downloadSelectedFilm);
         Store.addFilmsListener(this.onMoviesListLoaded);
     }
 
     componentWillUnmount() {
-        Store.removeFilmsListener(this.DownloadSelectedFilms);
+        Store.removeFilmsListener(this.downloadSelectedFilm);
         Store.removeFilmsListener(this.onMoviesListLoaded)
     }
     onMoviesListLoaded = () => {
-        let moviesId = Store.getMovies();
+        //let moviesId = Store.getMovies();
+        console.log(this.state.selectedMovies);
         this.state.movies.forEach(movie => {
             this.updateMoviesAttrs({
                 ...movie,
-                planned: moviesId.planned.includes(movie.id),
-                viewed: moviesId.viewed.includes(movie.id)
+                planned:this.state.selectedMovies.planned.includes(movie.id),
+                viewed: this.state.selectedMovies.viewed.includes(movie.id)
             })
+            //console.log(movie)
         })
     };
     updateMoviesAttrs = newMovie => {
         this.setState({
             movies: this.state.movies.map(oldMovie => oldMovie.id === newMovie.id ? newMovie : oldMovie)
         })
+            //console.log(newMovie)
     };
-    DownloadSelectedFilms = () => {
+    downloadSelectedFilm = () => {
         this.setState({
             selectedMovies: Store.getMovies()
         })
     };
-    getMovies = async (pageNumber) => {
+    GetMovies = async (pageNumber) => {
         this.setState({
             loading: true
         });
@@ -57,9 +61,12 @@ class MovieList extends React.Component {
                     loading: false
                 }
             )
+            this.onMoviesListLoaded()
         } catch {
             console.log('error')
         }
+
+        console.log(this.state.movies)
     };
 
 
