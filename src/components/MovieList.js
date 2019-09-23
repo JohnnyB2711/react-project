@@ -35,7 +35,7 @@ class MovieList extends React.Component {
             loading: true
         });
         try {
-            const data = await getTopRatedMovies(pageNumber);
+            const data = await this.props.getFunction(pageNumber);
             await this.setState({
                     movies: data.results,
                     totalPages: data.total_pages,
@@ -63,14 +63,14 @@ class MovieList extends React.Component {
                                 defaultCurrent={this.state.currentPage} total={this.state.totalPages * 10}/>
                 </div>
                 <div className='PageFilm container-fluid'>
-                    <h1>Top rated movies</h1>
+                    <h1>{this.props.name}</h1>
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
                         <div className='row'>
                             {
                                 this.state.movies.map((movie) => {
-                                    return <div key={movie.id} className='col-md-2'>
+                                    return <div key={movie.id} className='col-md-4'>
                                         <MovieCard movie={movie}/>
                                     </div>
                                 })
