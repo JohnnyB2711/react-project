@@ -5,19 +5,33 @@ const HOST_MOVIE_DB = "https://api.themoviedb.org/3";
 const SERVER_HOST = "http://localhost/api/movie";
 const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
 
-export async function getPlannedMovies(pageNumber) {
-    const {data} = await axios.get(`${SERVER_HOST}/planned?page=${pageNumber}`);
+function getMovieDbUrl(url) {
+    return (`${HOST_MOVIE_DB}${url}?api_key=${API_KEY}`);
+}
+
+function getBackendUrl(url) {
+    return (`${SERVER_HOST}${url}`);
+}
+
+export async function getPlannedMovies(page) {
+    const {data} = await axios.get(getBackendUrl('/planned'), {
+        page
+    });
     return data
 }
 
-export async function getViewedMovies(pageNumber) {
-    const {data} = await axios.get(`${SERVER_HOST}/viewed?page=${pageNumber}`);
+export async function getViewedMovies(page) {
+    const {data} = await axios.get(getBackendUrl('/viewed'), {
+        params: {
+            page
+        }
+    });
     return data
 }
 
 export async function getPlanedAndViewedMovies() {
     try {
-        const {data} = await axios.get(`${SERVER_HOST}/viewedandplanned`);
+        const {data} = await axios.get(getBackendUrl('/viewedandplanned'));
         Dispatcher.dispatch({
             action: 'LOAD_SELECTED_FILMS',
             films: data
@@ -25,12 +39,15 @@ export async function getPlanedAndViewedMovies() {
     } catch (e) {
         console.log(e)
     }
-    //return data
 }
 
 export async function downloadGenres() {
     try {
-        const {data} = await axios.get(`${HOST_MOVIE_DB}/genre/movie/list?language=en-US&api_key=${API_KEY}&language=en-US`);
+        const {data} = await axios.get(getMovieDbUrl('/genre/movie/list'), {
+            params: {
+                language: `en-US`
+            }
+        });
         Dispatcher.dispatch({
             action: 'LOAD_GENRES',
             genre: data.genres
@@ -41,27 +58,54 @@ export async function downloadGenres() {
     //return data
 }
 
-export async function searchMovie(line, pageNumber) {
-    const {data} = await axios.get(`${HOST_MOVIE_DB}/search/movie/?api_key=${API_KEY}&language=en-US&page=${pageNumber}&query=${line}`);
+export async function searchMovie(line, page) {
+    const {data} = await axios.get(getMovieDbUrl('/search/movie/'), {
+        params: {
+            language: `en-US`,
+            page,
+            query: `${line}`
+        }
+    });
     return data
 }
 
-export async function getPopularMovies(pageNumber) {
-    const {data} = await axios.get(`${HOST_MOVIE_DB}/movie/popular?api_key=${API_KEY}&language=en-US&page=${pageNumber}`);
+export async function getPopularMovies(page) {
+    const {data} = await axios.get(getMovieDbUrl('/movie/popular'), {
+        params: {
+            language: `en-US`,
+            page
+        }
+    });
     return data
 }
 
-export async function searchByGenre(line, pageNumber) {
-    const {data} = await axios.get(`${HOST_MOVIE_DB}/discover/movie?api_key=${API_KEY}&language=en-US&page=${pageNumber}&with_genres=${line}`);
+export async function searchByGenre(line, page) {
+    const {data} = await axios.get(getMovieDbUrl('/discover/movie'), {
+        params: {
+            language: `en-US`,
+            page,
+            with_genres: `${line}`
+        }
+    });
     return data
 }
 
-export async function getTopRatedMovies(pageNumber) {
-    const {data} = await axios.get(`${HOST_MOVIE_DB}/movie/top_rated?api_key=${API_KEY}&language=en-US&page=${pageNumber}`);
+export async function getTopRatedMovies(page) {
+    const {data} = await axios.get(getMovieDbUrl('/movie/top_rated'), {
+        params: {
+            language: `en-US`,
+            page
+        }
+    });
     return data
 }
 
-export async function getUpcomingMovies(pageNumber) {
-    const {data} = await axios.get(`${HOST_MOVIE_DB}/movie/upcoming?api_key=${API_KEY}&language=en-US&page=${pageNumber}`);
+export async function getUpcomingMovies(page) {
+    const {data} = await axios.get(getMovieDbUrl('/movie/upcoming'), {
+        params: {
+            language: `en-US`,
+            page
+        }
+    });
     return data
 }

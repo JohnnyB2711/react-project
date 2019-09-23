@@ -14,8 +14,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '../src/pages/PagesStyle.scss';
 import {getPlanedAndViewedMovies, downloadGenres} from './actions'
 
-const API_KEY = "ac24c5f255eb805f019fbfdd3539c068";
-
 class App extends React.Component {
     state = {
         inputValue: ''
