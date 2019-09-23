@@ -1,9 +1,9 @@
 import React from 'react';
-import MovieCards from "../components/MovieCards/MovieCards";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
 import {searchByGenre} from '../actions'
+import MovieCard from "../components/MovieCards/MovieCard";
 
 class SearchByGenre extends React.Component {
     state = {
@@ -54,7 +54,15 @@ class SearchByGenre extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCards movies={this.state.movies}/>
+                        <div className='row'>
+                            {
+                                this.state.movies.map((movie) => {
+                                    return <div key={movie.id} className='col-md-4'>
+                                        <MovieCard movie={movie} updateMoviesAttrs={this.updateMoviesAttrs}/>
+                                    </div>
+                                })
+                            }
+                        </div>
                     )}
                 </div>
 

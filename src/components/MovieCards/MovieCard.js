@@ -1,6 +1,6 @@
 import React from 'react'
 import {Button, Card} from 'react-bootstrap';
-import './MovieCards.scss'
+import './MovieCard.scss'
 import Store from "../../stores";
 import {postPlannedMovie, postViewedMovie} from '../../actions'
 
@@ -12,12 +12,12 @@ class MovieCard extends React.Component {
     componentDidMount() {
         this.onGenresLoaded();
         Store.addGenreListener(this.onGenresLoaded);
-        Store.addFilmsListener(this.onMoviesListLoaded)
+        //Store.addFilmsListener(this.onMoviesListLoaded)
     }
 
     componentWillUnmount() {
         Store.removeGenreListener(this.onGenresLoaded);
-        Store.removeFilmsListener(this.onMoviesListLoaded)
+        //Store.removeFilmsListener(this.onMoviesListLoaded)
     }
 
     showGenres = (idGenre) => {
@@ -30,7 +30,7 @@ class MovieCard extends React.Component {
             genres: Store.getGenre()
         })
     };
-    onMoviesListLoaded = () => {
+/*    onMoviesListLoaded = () => {
         let moviesId = Store.getMovies();
         this.props.movies.forEach(movie => {
             this.props.updateMoviesAttrs({
@@ -39,7 +39,7 @@ class MovieCard extends React.Component {
                 viewed: moviesId.viewed.includes(movie.id)
             })
         })
-    };
+    };*/
     postViewedMovie = async (movie) => {
         await postViewedMovie(movie);
         this.props.getMovies()

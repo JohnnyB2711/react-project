@@ -1,9 +1,9 @@
 import React from 'react';
-import MovieCards from "../components/MovieCards/MovieCards";
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap'
 import {getPlannedMovies} from '../actions'
+import MovieCard from "../components/MovieCards/MovieCard";
 
 class Planned extends React.Component {
     state = {
@@ -36,7 +36,6 @@ class Planned extends React.Component {
     };
 
     render() {
-        console.log(this.state.movies);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
@@ -49,7 +48,15 @@ class Planned extends React.Component {
                     {isLoggedIn ? (
                         <Spinner animation="border" role="status"/>
                     ) : (
-                        <MovieCards movies={this.state.movies} getMovies={this.getMovies}/>
+                        <div className='row'>
+                            {
+                                this.state.movies.map((movie) => {
+                                    return <div key={movie.id} className='col-md-4'>
+                                        <MovieCard movie={movie} updateMoviesAttrs={this.updateMoviesAttrs}/>
+                                    </div>
+                                })
+                            }
+                        </div>
                     )}
                 </div>
 

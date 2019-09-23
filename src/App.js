@@ -13,7 +13,6 @@ import SearchByGenre from "./pages/SearchByGenre";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../src/pages/PagesStyle.scss';
 import {getPlanedAndViewedMovies, downloadGenres} from './actions'
-import MoviePages from "./pages/MoviePages";
 
 class App extends React.Component {
     state = {
@@ -39,8 +38,9 @@ class App extends React.Component {
 
                 <Menu/>
                 <Switch>
-                    <Route exact path='/' component={MoviePages}/>
-                    <Route path='/:name' component={MoviePages}/>
+                    <Route exact path='/' component={TopRatedMovies}/>
+                    <Route path='/upcoming' component={UpcomingMovies}/>
+                    <Route path='/popular' component={PopularMovies}/>
                     <Route path='/viewed' component={ViewedMovies}/>
                     <Route path='/planed' component={PlannedMovies}/>
                     <Route path='/genre/:genre' component={SearchByGenre}/>

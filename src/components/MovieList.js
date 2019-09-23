@@ -3,7 +3,6 @@ import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import {Spinner} from 'react-bootstrap';
 import Store from "../stores";
-import {getTopRatedMovies} from '../actions'
 import MovieCard from "./MovieCards/MovieCard";
 
 class MovieList extends React.Component {
@@ -16,15 +15,30 @@ class MovieList extends React.Component {
     };
 
     componentDidMount() {
-        //this.DownloadSelectedFilms();
         this.getMovies(this.state.currentPage);
-        Store.addFilmsListener(this.DownloadSelectedFilms)
+        Store.addFilmsListener(this.DownloadSelectedFilms);
+        Store.addFilmsListener(this.onMoviesListLoaded);
     }
 
     componentWillUnmount() {
-        Store.removeFilmsListener(this.DownloadSelectedFilms)
+        Store.removeFilmsListener(this.DownloadSelectedFilms);
+        Store.removeFilmsListener(this.onMoviesListLoaded)
     }
-
+    onMoviesListLoaded = () => {
+        let moviesId = Store.getMovies();
+        this.state.movies.forEach(movie => {
+            this.updateMoviesAttrs({
+                ...movie,
+                planned: moviesId.planned.includes(movie.id),
+                viewed: moviesId.viewed.includes(movie.id)
+            })
+        })
+    };
+    updateMoviesAttrs = newMovie => {
+        this.setState({
+            movies: this.state.movies.map(oldMovie => oldMovie.id === newMovie.id ? newMovie : oldMovie)
+        })
+    };
     DownloadSelectedFilms = () => {
         this.setState({
             selectedMovies: Store.getMovies()
@@ -47,14 +61,9 @@ class MovieList extends React.Component {
             console.log('error')
         }
     };
-    updateMoviesAttrs = newMovie => {
-        this.setState({
-            movies: this.state.movies.map(oldMovie => oldMovie.id === newMovie.id ? newMovie : oldMovie)
-        })
-    };
+
 
     render() {
-        console.log(this.state.movies);
         const isLoggedIn = this.state.loading;
         return (
             <div className='Page container-fluid'>
@@ -71,7 +80,7 @@ class MovieList extends React.Component {
                             {
                                 this.state.movies.map((movie) => {
                                     return <div key={movie.id} className='col-md-4'>
-                                        <MovieCard movie={movie}/>
+                                        <MovieCard movie={movie} updateMoviesAttrs={this.updateMoviesAttrs}/>
                                     </div>
                                 })
                             }
