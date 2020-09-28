@@ -21,3 +21,7 @@ input{
   margin: 0 auto;
 
 }
+.edit-post{
+  display: flex;
+  flex-direction: column;
+}

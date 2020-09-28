@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './components/Header/Header'
-import Menu from './components/Menu/Menu'
 import Footer from './components/Footer/Footer'
 import SearchMovies from "./pages/SearchMovies";
 import {Route, Switch} from 'react-router-dom'
@@ -10,17 +9,21 @@ import PopularMovies from "./pages/PopularMovies";
 import ViewedMovies from "./pages/ViewedMovies";
 import PlannedMovies from "./pages/PlannedMovies";
 import SearchByGenre from "./pages/SearchByGenre";
+import Login from "./pages/_Unused/Login";
 import 'bootstrap/dist/css/bootstrap.css'
 import '../src/pages/PagesStyle.scss';
-import {getPlanedAndViewedMovies, downloadGenres} from './actions'
+import {getPlanedAndViewedMovies} from './actions'
+import "react-popupbox/dist/react-popupbox.css"
+import {withTranslation} from 'react-i18next';
+import {Container} from "react-bootstrap";
+import Menu from "./components/Menu/Menu";
 
 class App extends React.Component {
     state = {
-        inputValue: ''
+        inputValue: '',
     };
 
     componentDidMount() {
-        downloadGenres();
         getPlanedAndViewedMovies()
     }
 
@@ -32,13 +35,12 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className='container col-10'>
-
+            <Container>
                 <Header inputValue={this.updateInputValue}/>
-
                 <Menu/>
                 <Switch>
                     <Route exact path='/' component={TopRatedMovies}/>
+                    <Route path='/login' component={Login}/>
                     <Route path='/upcoming' component={UpcomingMovies}/>
                     <Route path='/popular' component={PopularMovies}/>
                     <Route path='/viewed' component={ViewedMovies}/>
@@ -47,9 +49,9 @@ class App extends React.Component {
                     <Route path='/search/:line' component={SearchMovies}/>
                 </Switch>
                 <Footer/>
-            </div>
+            </Container>
         )
     }
 }
 
-export default App;
+export default withTranslation('translations')(App);

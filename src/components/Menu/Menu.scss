@@ -1,13 +1,30 @@
-.MenuItems{
-  width: 70%;
-  display: flex;
+.navbar-nav {
+  width: 100%;
   justify-content: space-between;
-  margin: auto;
+
+  .nav-link {
+    color: #c7c2c2 !important;
+  }
+
+  a {
+    text-decoration: none;
+    padding: 0 !important;
+    color: #c7c2c2;
+  }
+
+  .dropdown {
+    a {
+      color: black;
+    }
+  }
+
+  .dropdown-menu {
+    padding: 10px 20px;
+  }
 }
-a{
-  color: #0aaee4 !important;
-  padding: 0!important;
-}
-navbar{
-  background: white !important;
+
+.show > .btn-primary.dropdown-toggle:focus{
+  box-shadow: none!important;
+  border: none;
+  outline: none;
 }

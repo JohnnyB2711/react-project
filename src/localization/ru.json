@@ -1,0 +1,19 @@
+{
+  "test": "Вывод текста с переменной {{word}}",
+  "title": "Авторизация",
+  "password": "Пароль",
+  "email-address": "Email адрес",
+  "message": "Мы <strong>никогда</strong> никому не передадим вашу электронную почту.",
+  "remember": "Запомнить меня",
+  "submit": "Отправить",
+  "enter-email": "Введите Email",
+  "enter-password": "Введите пароль",
+  "Validate": "Валидация",
+  "top-rated": "Лучшие",
+  "upcoming": "Скоро в прокате",
+  "popular": "Популярные",
+  "viewed": "Просмотренные",
+  "planned": "Запланированные",
+  "genre": "Жанр",
+  "search-placeholder": "Введите фильм для поиска..."
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Authorization",
+  "password": "Password",
+  "email-address": "Email address",
+  "message": "We'll <strong>never</strong> share your email with anyone else.",
+  "remember": "Remember me",
+  "submit": "Submit",
+  "enter-email": "Enter Email",
+  "enter-password": "Enter password",
+  "Validate": "Validate",
+  "top-rated": "Top rated",
+  "upcoming": "Upcoming",
+  "popular": "Popular",
+  "viewed": "Viewed",
+  "planned": "Planned",
+  "genre": "Genre",
+  "search-placeholder": "Enter movie to search..."
+}

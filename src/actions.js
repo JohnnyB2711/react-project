@@ -9,6 +9,7 @@ function getMovieDbUrl(url) {
     return (`${HOST_MOVIE_DB}${url}?api_key=${API_KEY}`);
 }
 
+
 function getBackendUrl(url) {
     return (`${SERVER_HOST}${url}`);
 }
@@ -60,7 +61,7 @@ export async function getPlanedAndViewedMovies() {
     }
 }
 
-export async function downloadGenres() {
+/*export async function downloadGenres() {
     try {
         const {data} = await axios.get(getMovieDbUrl('/genre/movie/list'), {
             params: {
@@ -74,7 +75,7 @@ export async function downloadGenres() {
     } catch (e) {
         console.log(e)
     }
-}
+}*/
 
 export async function searchMovie(line, page) {
     const {data} = await axios.get(getMovieDbUrl('/search/movie/'), {
